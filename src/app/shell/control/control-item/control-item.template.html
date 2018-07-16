@@ -1,0 +1,16 @@
+<div class="item control">
+    <div class="status" [class.active]="item.in_use"></div>
+    <div class="details">
+        <div class="name">{{item.name}}</div>
+        <div class="extras">
+            <div class="icon" *ngIf="item.extras">
+                <i class="material-icons">info</i>
+            </div>
+            <div class="field">Capacity: {{item.capacity || '0'}} {{item.capacity === 1 ? 'Person' : 'People'}}</div>
+        </div>
+    </div>
+    <div class="options">
+        <div class="field">{{item.level?.name}}</div>
+        <btn name="find" (tap)="control()"><div>Control</div></btn>
+    </div>
+</div>

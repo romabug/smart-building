@@ -1,0 +1,82 @@
+/*
+* @Author: Alex Sorafumo
+* @Date:   2017-05-17 12:52:41
+ * @Last Modified by: Alex Sorafumo
+ * @Last Modified time: 2017-07-17 11:48:57
+*/
+
+@import 'shared.styles';
+
+.container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.list {
+    flex: 1;
+    width: 5em;
+    overflow: auto;
+    height: 100%;
+    background-color: $background;
+}
+
+.mid {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    padding: .5em;
+    min-height: 3.2em;
+    background-color: #fff;
+    margin: .5em auto;
+    border-radius: 4px;
+    max-width: 95%;
+    width: 1024px;
+    box-shadow: 0 1px 3px 0 rgba(#000, .2), 0 1px 1px 0 rgba(#000, .14), 0 2px 1px -1px rgba(#000, .12);
+}
+
+.status {
+    margin: .25em .5em .25em .25em;
+    width: 8px;
+    min-width: 8px;
+    border-radius: 4px;
+    height: 2em;
+    background-color: $error;
+    &.free {
+        background-color: $success;
+    }
+}
+
+.details {
+    flex: 1;
+    width: 5em;
+}
+
+.role {
+    font-size: .7em;
+    color: rgba(#000, .54);
+}
+
+.added {
+    font-size: .8em;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.undo {
+    font-weight: 500;
+    color: $pending;
+    &:hover {
+        color: rgba($pending, .65);
+    }
+}

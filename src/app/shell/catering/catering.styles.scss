@@ -1,0 +1,165 @@
+@import 'shared.styles';
+
+$max-width: 1024px;
+
+.catering {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: $background;
+    @include respond-to(mobile) {
+        bottom: 3em;
+    }
+}
+
+.shop {
+    height: 100%;
+    width: 100%;
+    max-width: 1024px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-right: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    margin: auto;
+    & > div {
+        flex: 1;
+        height: 3em;
+        width: 100%;
+        position: relative;
+    }
+    @include respond-to(not-desktop) {
+        border: none;
+    }
+}
+
+.header {
+    display: flex;
+    height: 3em;
+    min-height: 3em;
+    background-color: #fff;
+    flex: 0 !important;
+    border-bottom: 1px solid rgba(#000, .12);
+    box-shadow: 0 0 5px 0 rgba(#000, .35);
+    z-index: 100;
+    padding: 0 .25em;
+    & > div {
+        display: flex;
+        align-items: center;
+        padding: 0 .25em;
+        font-size: .9em;
+    }
+}
+
+.delivery {
+    flex: 1;
+    width: 10em;
+    align-items: center;
+    flex-wrap: wrap;
+    & > div {
+        display: flex;
+        align-items: center;
+        padding: 0 .5em;
+        @include respond-to(mobile) {
+            padding: 0;
+        }
+    }
+
+    .time {
+        @include respond-to(mobile) {
+            padding-left: .5em;
+            width: 3.5em;
+            flex-wrap: wrap;
+        }
+        span {
+            @include respond-to(mobile) {
+                padding: .25em;
+            }
+        }
+    }
+
+    .location {
+        @include respond-to(mobile) {
+            width: 15.5em;
+        }
+    }
+}
+
+.back {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: rgba(#000, .5);
+    &:hover {
+        color: rgba(#000, .87);
+    }
+    i { font-size: 1.5em; }
+}
+
+.icon {
+    position: relative;
+    height: 1.2em;
+    width: 1.2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2em;
+    color: rgba(#000, .5);
+    cursor: pointer;
+    .count {
+        position: absolute;
+        top: -3px;
+        right: 0;
+        height: 18px;
+        width: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+        border-radius: 100%;
+        border: 2px solid #fff;
+        background-color: #888;
+        color: #fff;
+    }
+    &.disabled {
+        color: rgba(#000, .2);
+        &:hover {
+            color: rgba(#000, .2);
+        }
+    }
+    &:hover {
+        color: rgba(#000, .87);
+    }
+}
+
+.popup {
+    padding: .5em;
+    width: 12em;
+    .title {
+        font-size: 1em;
+    }
+    .item {
+        padding: .2em .5em;
+        display: flex;
+    }
+
+    .day {
+        min-width: 3.5em;
+    }
+}
+
+.time {
+    span {
+        padding: .75em;
+        color: $color-primary;
+        text-decoration: underline;
+        font-size: .8em;
+        cursor: pointer;
+        &:hover {
+            color: $color-primary + #111111;
+        }
+    }
+}

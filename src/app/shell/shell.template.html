@@ -1,0 +1,92 @@
+<div class="container" *ngIf="model.user">
+    <div class="header" [class.show]="model.menu && model.menu.show">
+        <div class="block">
+            <div class="logo" (tap)="home()" [style.background]="(model.logo ? model.logo.background : '') | safestyle">
+                <img *ngIf="model.logo.type==='image' || model.logo.type==='img'" [src]="model.logo.src">
+                <i *ngIf="model.logo.type!=='image' && model.logo.type!=='img'" [class]="model.logo.src"></i>
+            </div>
+        </div>
+        <div class="heading" *ngIf="(!model.banner || !model.banner.header) && !model.hide_heading">
+            {{model.heading}}
+        </div>
+        <div class="block menu">
+            <div class="menu-icon" *ngIf="model.menu" [class.show]="model.menu.show" (tap)="model.menu.show = !model.menu.show">
+                <div class="bar one"></div>
+                <div class="bar two"></div>
+                <div class="bar three"></div>
+            </div>
+            <i class="material-icons" *ngIf="!model.menu&&model.bld_count > 1" (tap)="model.show_building = true">location_city</i>
+            <i class="material-icons" *ngIf="!model.menu" (tap)="home()">home</i>
+        </div>
+    </div>
+    <div [class]="'banner ' + model.banner.type" *ngIf="model.banner && model.banner.header && model.banner.show && model.heading"
+        [style.background-color]="model.banner.color"
+        [style.background-image]="model.banner.background ? 'url(' + model.banner.background + ')' : ''">
+        <div class="overlay"></div>
+        <div class="heading">{{model.heading}}</div>
+    </div>
+    <div class="route" *ngIf="model.route && model.routing.main">
+        <div class="routing-block">
+            <div class="main" (tap)="route()">
+                <div class="icon" *ngIf="model.routing.sub">
+                    <i class="material-icons">keyboard_arrow_left</i>
+                </div>
+                <div class="name">{{model.routing.main}}</div>
+            </div>
+            <div class="sub" *ngIf="model.routing.sub">
+                <div class="name">{{model.routing.sub}}</div>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <router-outlet></router-outlet>
+    </div>
+    <div class="footer" *ngIf="model.menu && model.menu.show_footer && model.menu.footer">
+        <div [class]="'menu ' + model.menu.footer" [class.named]="model.menu.named">
+            <div class="item" *ngFor="let tile of model.tiles" [class.active]="tile.active"
+            [style.background-color]="(model.menu.footer === 'bg' || model.menu.footer === 'background') && tile.active ?  tile.color : ''"
+            [style.color]="(model.menu.footer !== 'bg' && model.menu.footer !== 'background') && tile.active ?  tile.color : ''"
+            (tap)="goto(tile)">
+                <div class="icon" [style.background-color]="model.menu.footer === 'circles' && tile.active ? tile.color : ''">
+                    <i *ngIf="tile.icon" [class]="tile.icon.class">{{tile.icon.value}}</i>
+                    <img *ngIf="tile.img" [src]="tile.img">
+                </div>
+                <div class="text" *ngIf="model.menu.named">{{tile.name}}</div>
+            </div>
+        </div>
+    </div>
+    <div class="overlay" *ngIf="model.menu" [class.show]="model.menu.show">
+        <div class="menu" [class.sidebar]="model.menu.type === 'sidebar'">
+            <div class="topbar" [style.background-image]="model.menu.background ? 'url(' + model.menu.background + ')' : ''">
+                <i class="material-icons" *ngIf="model.bld_count > 1" (tap)="model.show_building = true">location_city</i>
+            </div>
+            <div class="list">
+                <div class="menu-item" *ngFor="let item of model.menu.list">
+                    <div class="item" [class.active]="item.active" (tap)="goto(item)">
+                        <div class="name">{{item.name}}</div>
+                        <div class="icon">
+                            <i class="material-icons">keyboard_arrow_right</i>
+                        </div>
+                    </div>
+                    <div class="submenu" [class.show]="item.show" *ngIf="item.items && item.items.length > 0">
+                        <div class="item" *ngFor="let itm of item.items" [class.active]="item.active" (tap)="goto(itm)">
+                            <div class="name">{{itm.name}}</div>
+                            <div class="icon">
+                                <i class="material-icons">keyboard_arrow_right</i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-footer">
+                <div class="copyright">{{model.copyright}}</div>
+            </div>
+        </div>
+    </div>
+    <div class="bld">
+        <building-select *ngIf="model.show_building" (event)="model.show_building = false"></building-select>
+    </div>
+</div>
+<div class="container" *ngIf="!model.user">
+    <login-display></login-display>
+</div>

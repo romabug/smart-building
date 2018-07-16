@@ -1,0 +1,172 @@
+/*
+* @Author: Alex Sorafumo
+* @Date:   2017-05-17 12:52:41
+ * @Last Modified by: Alex Sorafumo
+ * @Last Modified time: 2017-07-17 11:48:57
+*/
+
+@import 'shared.styles';
+
+.container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    background-color: $background;
+
+    &.route {
+        .letter-list {
+            width: 1em;
+            margin: .2em;
+            height: calc(100% - .4em);
+            border: none;
+            box-shadow: 0 1px 3px 0 rgba(#000, .2), 0 1px 1px 0 rgba(#000, .14), 0 2px 1px -1px rgba(#000, .12);
+            border-radius: .55em;
+        }
+
+        .header {
+            border-radius: 1.5em;
+            width: 1048px;
+            max-width: 98%;
+            margin: auto;
+            box-shadow: 0 1px 3px 0 rgba(#000, .2), 0 1px 1px 0 rgba(#000, .14), 0 2px 1px -1px rgba(#000, .12);
+        }
+    }
+}
+
+.list {
+    flex: 1;
+    width: 5em;
+    overflow: auto;
+    height: 100%;
+}
+
+.header {
+    color: #fff;
+    background-color: lighten($neutral, 10);
+    display: flex;
+    position: sticky;
+    padding: .5em 1em;
+    top: 0;
+    z-index: 101;
+}
+
+.item {
+    padding: .5em;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background-color: #fff;
+    margin: .5em auto;
+    border-radius: 4px;
+    max-width: 95%;
+    width: 1024px;
+    box-shadow: 0 1px 3px 0 rgba(#000, .2), 0 1px 1px 0 rgba(#000, .14), 0 2px 1px -1px rgba(#000, .12);
+    &:last-child {
+        border: none;
+    }
+}
+
+.status {
+    margin: .25em .5em .25em .25em;
+    width: 8px;
+    min-width: 8px;
+    border-radius: 4px;
+    height: 2em;
+    background-color: $error;
+    &.free {
+        background-color: $success;
+    }
+}
+
+.details {
+    flex: 1;
+    width: 5em;
+    overflow: hidden;
+}
+
+.name {
+    @include respond-to(mobile) {
+        font-size: .8em;
+    }
+}
+
+.role {
+    color: rgba(#000, 0.54);
+    font-size: .7em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.add {
+    min-width: 2em;
+    text-align: center;
+    height: 2.5em;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    .added-circle {
+        position: relative;
+        height: 1.5em;
+        min-width: 1.5em;
+        height: 1.5em;
+        width: 1.5em;
+        background-color: $success;
+        color: #fff;
+        border-radius: 100%;
+        font-size: 1.2em;
+        font-weight: bold;
+        margin: .1em .2em;
+    }
+}
+
+.letter-list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100%;
+    padding: 1em 0;
+    border-left: 1px solid rgba(#000, .1);
+    width: 1.2em;
+    background-color: #fff;
+    @include respond-to(mobile) {
+        font-size: 1.2em;
+    }
+
+    .letter {
+        display: flex;
+        flex: 1;
+        align-items: center;
+        justify-content: center;
+        color: $color-primary;
+        font-size: .6em;
+        height: 1.2rem;
+        cursor: pointer;
+        transition: font-size 300ms, color 300ms;
+
+        &:hover {
+            color: rgba($color-primary, .54);
+        }
+
+        &.disabled {
+            color: rgba(#000, .1);
+        }
+
+        &.active {
+            font-size: .7em;
+            color: $color-secondary;
+        }
+    }
+}
+
+.mid {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

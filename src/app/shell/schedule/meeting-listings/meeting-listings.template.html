@@ -1,0 +1,30 @@
+<div class="container" (swipeleft)="model.offset < -(model.bookings.length - 3) ? '' : model.offset = model.offset - 1"  (swiperight)="model.offset >= 0 ? '' : model.offset = model.offset + 1">
+    <div class="option" [class.disabled]="!model.bookings || model.bookings.length <= 0 || !model.offset">
+        <i class="material-icons" (tap)="model.offset = model.offset + 1">keyboard_arrow_left</i>
+    </div>
+    <div class="content">
+        <div class="list" *ngIf="model.bookings && model.bookings.length > 0">
+            <div class="item" *ngFor="let item of model.bookings; let i = index"
+                [style.transform]="'translate(' + (100 * (i + model.offset)) + '%, -50%)'" (tap)="viewEvent(item)">
+                <div class="content">
+                    <div class="details">
+                        <div class="date">{{item.display.date || 'Today'}}</div>
+                        <div class="field">{{item.display.title || 'No title'}}</div>
+                        <div class="field">{{item.display.time || 'Sometime'}}</div>
+                        <div class="field">{{item.display.location || 'Somewhere'}}</div>
+                        <div class="field">{{item.display.attend || 'No Attendees'}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="no-item" *ngIf="!model.bookings || model.bookings.length <= 0">
+            <div class="icon">
+                <i class="material-icons">close</i>
+            </div>
+            <div class="text">No Bookings for today</div>
+        </div>
+    </div>
+    <div class="option" [class.disabled]="!model.bookings || model.bookings.length <= 0 || model.offset < -(model.bookings.length - 3)">
+        <i class="material-icons" (tap)="model.offset = model.offset - 1">keyboard_arrow_right</i>
+    </div>
+</div>

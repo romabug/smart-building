@@ -1,0 +1,50 @@
+<div class="container" [class.edit]="edit">
+    <ng-container *ngFor="let field of model.fields">
+        <div class="field" [class.error]="model.error[field.id] && !model.error[field.id].warn" [class.warn]="model.error[field.id] && model.error[field.id].warn"
+            [class.focus]="model.focus[field.id]">
+            <div class="icon">
+                <i class="material-icons">{{field.icon}}</i>
+            </div>
+            <div class="display" (tap)="field.fn ? this[field.fn]() : ''">
+                <div class="label"></div>
+                <div class="value">
+                    <div class="text" *ngIf="field.type === 'select'">{{model.form[field.id] ? model.display[field.id] : 'No ' + field.name + ' selected' }}</div>
+                    <div class="text" *ngIf="field.type === 'text'">
+                        <input-field name="basic" [(model)]="model.form[field.id]" (modelChange)="model.error[field.id] = null; storeForm()" [placeholder]="field.name"
+                            (focus)="model.focus[field.id] = true" (blur)="model.focus[field.id] = false">
+                        </input-field>
+                    </div>
+                    <!-- <btn *ngIf="field.type === 'select'">Select</btn> -->
+                </div>
+                <div class="icon">
+                    <i class="material-icons">{{model.error[field.id] ? (model.error[field.id].warn ? 'warning' : 'error') : (model.form.room ? 'done'
+                        : '') }}</i>
+                </div>
+            </div>
+        </div>
+        <div class="error-info" *ngIf="model.error[field.id] && model.error[field.id].message" [class.warn]="model.error[field.id].warn">
+            {{model.error[field.id].message}}
+        </div>
+    </ng-container>
+    <div class="week" *ngIf="model.week">
+        <div class="day" *ngFor="let day of model.week" [class.past]="day.past" [class.active]="day.active" (tap)="selectDay(day)">
+            <div class="date">{{day.date}}</div>
+            <div class="name" [class.weekend]="day.weekend">{{day.day}}</div>
+        </div>
+    </div>
+    <div class="block" *ngIf="model.enable.recurrence" [class.show]="model.show.recurrence">
+        <div class="header">
+            <div class="bar"></div>
+            <div class="details" (tap)="toggleBlock('recurrence')">
+                <div class="text">Recurrence</div>
+                <div class="icon" (tap)="toggleBlock('recurrence')">
+                    <i class="material-icons">{{model.show.recurrence ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}</i>
+                </div>
+            </div>
+            <div class="bar"></div>
+        </div>
+        <div class="list">
+            <radioset [(model)]="model.form.reccur" [list]="['None', 'Day', 'Week', 'Month']" [inline]="true"></radioset>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,124 @@
+
+@import 'shared.styles';
+
+.container {
+    display: flex;
+    width: 100%;
+    min-height: 9em;
+}
+
+.content {
+    flex: 1;
+    width: 5em;
+}
+
+.list {
+    position: relative;
+    width: 100%;
+    height: 9em;
+    overflow: hidden;
+    font-size: 1.2em;
+}
+
+.item {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 20%;
+    transition: transform 300ms;
+    padding: .5em;
+    @include respond-to(tablet) {
+        width: 33.33333%;
+    }
+    @include respond-to(mobile) {
+        width: 50%;
+    }
+    .content {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+        font-size: .6em;
+        width: 13em;
+        min-height: 13em;
+        overflow: hidden;
+        max-width: 100%;
+        border: 1px solid rgba(#000, 0);
+        transition: border-color 300ms, box-shadow 300ms;
+        cursor: pointer;
+        &:hover {
+            border-color: $color-primary;
+            box-shadow: 0 2px 6px 0 rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 4px 2px -2px rgba(0,0,0,.12);
+        }
+    }
+
+    .date {
+        font-size: 1.2em;
+        text-transform: uppercase;
+        color: #33394b;
+        margin-bottom: .5em;
+        font-weight: bold;
+    }
+
+    .field {
+        color: #999;
+        font-size: 1em;
+        line-height: 1.4em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: .25em;
+    }
+
+    .details {
+        padding: 1.5em;
+        line-height: 2.5em;
+    }
+
+    .more {
+        padding: .75em 1em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-top: 1px solid #ccc;
+        color: $color-primary;
+        white-space: nowrap;
+        text-transform: uppercase;
+        cursor: pointer;
+        font-size: .9em;
+        &:hover {
+            background-color: rgba(#000, .2);
+        }
+    }
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3em;
+    width: 1em;
+    @include respond-to(mobile) {
+        width: .8em;
+    }
+    i {
+        &:hover {
+            color: rgba(#000, .54);
+        }
+    }
+    &.disabled {
+        color: rgba(#000, .2);
+        pointer-events: none;
+        i {
+            &:hover {
+                color: rgba(#000, .2);
+            }
+        }
+    }
+}
+
+.no-item {
+    font-size: 1em;
+}

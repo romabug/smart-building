@@ -1,0 +1,49 @@
+
+<div class="container" [class.route]="!modal && model.route">
+    <div class="list" #list (scroll)="updateScroll()" *ngIf="model.user_list && model.user_list.length > 0">
+        <div class="group" *ngFor="let group of model.user_groups">
+            <div class="start" [id]="'user-letter-start-' + group.letter"></div>
+            <div class="header" *ngIf="group.users.length">{{group.letter}}</div>
+            <div class="item" *ngFor="let item of group.users">
+                <div class="status" [style.opacity]="item.free === undefined ? 0 : 1" [class.free]="item.free"></div>
+                <div class="details">
+                    <div class="name">{{item.name}}</div>
+                    <div class="role">{{item.role || item.email}}</div>
+                </div>
+                <div class="add">
+                    <div class="added-circle" *ngIf="item.select">
+                        <i center class="material-icons">done</i>
+                    </div>
+                    <a [href]="'tel:' + item.clean_phone">
+                        <btn name="black inverse" format="mini-action" *ngIf="item.phone">
+                            <i class="material-icons">phone</i>
+                        </btn>
+                    </a>
+                    <btn [name]="item.select ? 'error' : 'success'" format="mini-action" [class.error]="item.select"
+                        (tap)="item.select ? remove(item, true) : add(item)">
+                        <i class="material-icons">{{item.select ? 'close' : 'add'}}</i>
+                    </btn>
+                </div>
+            </div>
+            <div class="end" [id]="'user-letter-end-' + group.letter"></div>
+        </div>
+    </div>
+    <div class="list mid" *ngIf="model.loading || (!model.user_list || model.user_list.length <= 0)">
+            <div class="no-item">
+                <div class="icon">
+                    <spinner *ngIf="model.loading" type="circle-ring" color="#999"></spinner>
+                    <i *ngIf="!model.loading" class="material-icons">{{model.search && model.search.length >= model.min_search ? 'close' : 'keyboard'}}</i>
+                </div>
+                <div class="text">
+                    {{model.loading ? 'Searching...' : (model.search && model.search.length >= model.min_search ? 'No matches found' : 'Type above to search for users')}}
+                </div>
+            </div>
+    </div>
+    <div class="letter-list">
+        <div class="letter" *ngFor="let group of model.user_groups"
+            [class.disabled]="group.users.length <= 0" [class.active]="group.letter === model.location"
+            (tap)="scrollTo(group.letter)">
+            {{group.letter}}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,341 @@
+{
+    "version": "0.11.1",
+    "build": "local-dev",
+    "env": "dev",
+    "debug": true,
+    "composer": {
+        "domain": "localhost:4200",
+        "route": "",
+        "protocol": "http:",
+        "use_domain": true,
+        "local_login": false
+    },
+    "app": {
+        "title": "ACA Projects",
+        "name": "ACA Projects",
+        "description": "ACA Projects Staff Application made in Angular 5+",
+        "short_name": "ACA",
+        "code": "ACA",
+        "analytics": {
+            "enabled": false,
+            "tracking_id": ""
+        },
+        "logo": {
+            "type": "img",
+            "src": "assets/img/logo.svg",
+            "background": ""
+        },
+        "banner": {
+            "header": false,
+            "home": "β Version",
+            "type": "",
+            "background": ""
+        },
+        "map_bookings": true,
+        "recurrance": true,
+        "copyright": "Copyright 2018 ACA Projects",
+        "routing": true,
+        "style": {
+            "popout": true
+        },
+        "menu": {
+            "type": "sidebar",
+            "footer": "basic",
+            "named": false,
+            "list": [
+                {
+                    "id": "book",
+                    "name": "Book",
+                    "items": []
+                },
+                {
+                    "id": "explore",
+                    "name": "Explore",
+                    "items": [
+                        {
+                            "id": "explore/spaces",
+                            "name": "Spaces"
+                        },
+                        {
+                            "id": "explore/people",
+                            "name": "People"
+                        }
+                    ]
+                },
+                {
+                    "id": "schedule",
+                    "name": "My Bookings",
+                    "items": []
+                },
+                {
+                    "id": "help",
+                    "name": "Help",
+                    "items": []
+                },
+                {
+                    "id": "control",
+                    "name": "Control",
+                    "items": []
+                },
+                {
+                    "url": "https://www.acaprojects.com",
+                    "name": "Homepage",
+                    "items": []
+                }
+            ]
+        },
+        "hide": {
+            "heading": false
+        },
+        "page_titles": {
+            "": "Home",
+            "home": "Home",
+            "book": "Book Space",
+            "book/room": "Find Space",
+            "book/attendees": "Manage Attendees",
+            "book/results": "Booking Results",
+            "explore": "Explore",
+            "explore/spaces": "Spaces",
+            "explore/people": "People",
+            "schedule": "My Bookings",
+            "control": "Control"
+        },
+        "page_banner": {
+            "background": "",
+            "links": [
+                {
+                    "id": "visitors",
+                    "name": "Book Visitors"
+                },
+                {
+                    "id": "catering",
+                    "name": "Book Catering"
+                }
+            ]
+        },
+        "home": {
+            "background": "assets/img/skyline.jpg",
+            "disclaimer": ""
+        },
+        "tiles": [
+            {
+                "id": "book",
+                "name": "Book",
+                "color": "",
+                "icon": {
+                    "class": "material-icons",
+                    "value": "add"
+                }
+            },
+            {
+                "id": "explore/spaces",
+                "name": "Spaces",
+                "color": "",
+                "icon": {
+                    "class": "material-icons",
+                    "value": "desktop_windows"
+                }
+            },
+            {
+                "id": "explore/people",
+                "name": "People",
+                "color": "",
+                "icon": {
+                    "class": "material-icons",
+                    "value": "people"
+                }
+            },
+            {
+                "id": "schedule",
+                "name": "My Bookings",
+                "color": "",
+                "icon": {
+                    "class": "material-icons",
+                    "value": "schedule"
+                }
+            },
+            {
+                "id": "help",
+                "name": "Help",
+                "color": "",
+                "icon": {
+                    "class": "material-icons",
+                    "value": "help_outline"
+                }
+            },
+            {
+                "id": "control",
+                "name": "Control",
+                "color": "",
+                "icon": {
+                    "class": "material-icons",
+                    "value": "settings_remote"
+                }
+            }
+        ],
+        "zones": {
+            "enabled": false,
+            "toggle": "room"
+        },
+        "booking": {
+            "min_attendees": 1,
+            "banner": {
+                "enabled": false,
+                "src": "assets/img/banner2.jpg",
+                "links": [
+                    {
+                        "id": "book",
+                        "name": "Book Space"
+                    },
+                    {
+                        "id": "book/visitor",
+                        "name": "Book Visitor"
+                    }
+                ]
+            }
+        },
+        "explore": {
+            "banner": {
+                "people": "",
+                "src": "assets/img/banner.jpg"
+            }
+        },
+        "control": {
+            "banner": {
+                "enabled": false,
+                "src": "assets/img/banner.jpg"
+            }
+        },
+        "people_min_char": 0,
+        "colors": {
+            "rooms": {
+                "available": "#317c36",
+                "unavailable": "#cd212e",
+                "not-bookable": "#e6e6e6",
+                "pin": "#317c36"
+            },
+            "desks": {
+                "available-fill": "#8cd4da",
+                "available-stroke": "#6ab2af",
+                "unavailable-fill": "#ec9d99",
+                "unavailable-stroke": "#ca7b77",
+                "not-bookable-fill": "#e6e6e6",
+                "not-bookable-stroke": "#c4c4c4"
+            }
+        },
+        "help": {
+            "type": "",
+            "disclaimer": "",
+            "tiles": [
+                {
+                    "name": "AV Support",
+                    "description": "",
+                    "src": "",
+                    "color": "",
+                    "link": "https://www.google.com"
+                },
+                {
+                    "name": "IT Help",
+                    "description": "",
+                    "src": "",
+                    "color": "",
+                    "link": "https://www.acaprojects.com"
+                },
+                {
+                    "name": "Emergency Contact",
+                    "description": "",
+                    "src": "",
+                    "color": "",
+                    "link": "https://www.ses.nsw.gov.au"
+                },
+                {
+                    "name": "Website",
+                    "description": "",
+                    "src": "",
+                    "color": "",
+                    "link": "https://www.acaprojects.com"
+                }
+            ]
+        },
+        "map_keys": {
+            "general": [
+                {
+                    "id": "lifts",
+                    "name": "Lifts",
+                    "icon": {
+                        "class": "material-icons",
+                        "value": "location_city"
+                    }
+                },
+                {
+                    "id": "toilets",
+                    "name": "Toilets",
+                    "icon": {
+                        "class": "material-icons",
+                        "value": "accessibility"
+                    }
+                },
+                {
+                    "id": "stairs",
+                    "name": "Stairs",
+                    "icon": {
+                        "class": "material-icons",
+                        "value": "trending_up"
+                    }
+                }
+            ],
+            "room": [
+                {
+                    "id": "bookable",
+                    "name": "Bookable",
+                    "color": "#317c36"
+                },
+                {
+                    "id": "in-use",
+                    "name": "In use",
+                    "color": "#cd212e"
+                },
+                {
+                    "id": "no-book",
+                    "name": "Not bookable",
+                    "color": "#545654"
+                }
+            ],
+            "desk": [
+                {
+                    "id": "bookable",
+                    "name": "Bookable",
+                    "color": "#317c36"
+                },
+                {
+                    "id": "in-use",
+                    "name": "In use",
+                    "color": "#cd212e"
+                },
+                {
+                    "id": "no-book",
+                    "name": "Not bookable",
+                    "color": "#545654"
+                }
+            ],
+            "zone": [
+                {
+                    "id": "low",
+                    "name": "Low Usage",
+                    "color": "#317c36"
+                },
+                {
+                    "id": "medium",
+                    "name": "Medium Usage",
+                    "color": "#f4a81d"
+                },
+                {
+                    "id": "high",
+                    "name": "High Usage",
+                    "color": "#cd212e"
+                }
+            ]
+        }
+    },
+    "mock": true
+}

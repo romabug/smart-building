@@ -1,0 +1,16 @@
+<div class="container">
+    <div class="events" *ngFor="let date of model.dates; let i = index">
+        <ng-container *ngIf="date.count > 0 || i === 0">
+            <div class="header">
+                <div class="contents">
+                    <div class="text">Meetings for {{date.display}}</div>
+                </div>
+            </div>
+            <div class="body">
+                <div class="contents">
+                    <meeting-listings [date]="date.value" (view)="view($event)"></meeting-listings>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</div>

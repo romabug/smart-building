@@ -1,0 +1,30 @@
+
+<div class="container">
+    <div class="list" *ngIf="users && users.length > 0">
+        <ng-container *ngFor="let item of users">
+        <div class="item" *ngIf="item">
+            <div class="status" [style.opacity]="item.free === undefined ? 0 : 1" [class.free]="item.free"></div>
+            <div class="details">
+                <div class="name">{{item.name}}</div>
+                <div class="role">{{item.email}}</div>
+            </div>
+            <div class="add" *ngIf="!active_user || item.email !== active_user.email">
+                <btn *ngIf="item.select" name="error" format="mini-action" (tap)="setState(item, false)">
+                    <i class="material-icons">close</i>
+                </btn>
+                <div class="added" *ngIf="!item.select">
+                    Removed<br><span class="undo" (tap)="setState(item, true)">UNDO</span>
+                </div>
+            </div>
+        </div>
+        </ng-container>
+    </div>
+    <div class="list mid" *ngIf="!users || users.length <= 0">
+        <div class="no-item">
+            <div class="icon">
+                <i class="material-icons">close</i>
+            </div>
+            <div class="text">No participants</div>
+        </div>
+    </div>
+</div>

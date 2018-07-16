@@ -1,0 +1,25 @@
+<div class="container">
+    <div class="form">
+        <div class="header">
+            <div class="text">Select Building</div>
+            <div class="close">
+                <i class="material-icons" (tap)="event.emit()">close</i>
+            </div>
+        </div>
+        <div class="body">
+            <div class="current">Current: {{model.current?.name}}</div>
+            <div class="list">
+                <div class="item" *ngFor="let bld of model.buildings" (tap)="set(bld)">
+                    <div class="text">{{bld.name}}</div>
+                    <div class="icon">
+                        <i *ngIf="model.active && bld.id === model.active.id" class="material-icons">done</i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <btn (tapped)="event.emit()">Close</btn>
+            <btn (tapped)="select()">Ok</btn>
+        </div>
+    </div>
+</div>

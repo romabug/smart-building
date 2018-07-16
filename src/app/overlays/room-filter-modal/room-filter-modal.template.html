@@ -1,0 +1,38 @@
+<div class="container">
+    <div class="header">
+        <div class="text">Filter Spaces</div>
+        <div class="close">
+            <i class="material-icons" (tap)="fn.close()">close</i>
+        </div>
+    </div>
+    <div class="body" *ngIf="model">
+        <div class="filter" *ngIf="model.level && model.level.names">
+            <div class="dropdown">
+                <dropdown name="blend" [list]="model.level.names" [(model)]="model.level.index" (modelChange)="event('Update')"></dropdown>
+            </div>
+        </div>
+        <div class="filter" *ngIf="model.capacity && model.capacity.names">
+            <div class="dropdown">
+                <dropdown name="blend" [list]="model.capacity.names" [(model)]="model.capacity.index" (modelChange)="event('Update')"></dropdown>
+            </div>
+        </div>
+        <div class="filter" *ngIf="model.form">
+            <checkbox name="n m" [(model)]="model.form.in_use" label="Show rooms in use" (modelChange)="event('Update')"></checkbox>
+        </div>
+        <div class="filter" *ngIf="model.extras && model.extras.length > 0">
+            <div class="block">
+                <div class="bar"></div>
+                <div class="heading">AV Preferences</div>
+                <div class="bar"></div>
+            </div>
+            <div class="list">
+                <ng-container *ngFor="let e of model.extras">
+                    <checkbox name="n m" [(model)]="e.active" (modelChange)="event('Update')" [label]="e.name"></checkbox>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+    <div class="options">
+        <btn name="full-width normal" (tapped)="event('Close')">Close</btn>
+    </div>
+</div>

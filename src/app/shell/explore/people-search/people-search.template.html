@@ -1,0 +1,108 @@
+<div class="container" [class.route]="state.route">
+    <div class="search" [class.show]="!model || state.focus || state.dictate">
+        <div class="standalone-banner" *ngIf="state.settings && state.settings.banner && state.settings.banner.people && state.settings.banner.people !== 'search'"
+            [style.background-image]="state.settings && state.settings.banner && state.settings.banner.src ? 'url('+state.settings.banner.src+')' : ''">
+            <div class="overlay"></div>
+            <ng-container *ngIf="state.settings.banner.people === 'roles'">
+                <div class="role" *ngFor="let r of state.role.list; let i = index">
+                    <btn [name]="state.role.active === i ? 'wide banner inverse' : 'wide banner'" (tapped)="(state.role.active === i ? state.role.active = -1 : state.role.active = i); state.show = false; filter()">
+                        <div class="icon" *ngIf="r.icon || r.image">
+                            <i *ngIf="r.icon" [class]="r.icon.class">{{r.icon.value}}</i>
+                            <img *ngIf="r.image" [src]="r.image">
+                        </div>
+                        <div class="text">{{r.name}}</div>
+                    </btn>
+                </div>
+            </ng-container>
+        </div>
+        <div class="header" [class.banner]="state.settings && state.settings.banner && state.settings.banner.people === 'search'"
+            [style.background-image]="state.settings && state.settings.banner && state.settings.banner.people === 'search' && state.settings.banner.src && (!model || state.focus || state.dictate) ? 'url('+state.settings.banner.src+')' : ''">
+            <div class="overlay" *ngIf="!model || state.focus || state.dictate"></div>
+            <div class="field">
+                <div class="icon">
+                    <i center class="material-icons">search</i>
+                </div>
+                <div class="input">
+                    <input #input [(ngModel)]="state.search" (ngModelChange)="filter()" (focus)="model = null; state.focus = true" (blur)="state.focus = false"
+                        [placeholder]="'Search for ' + (state.role && state.role.list && state.role.list[state.role.active] ? state.role.list[state.role.active].name : 'person') + '...'">
+                </div>
+                <div class="close" *ngIf="state.role && (!state.settings || !state.settings.banner || state.settings.banner.people !== 'roles')"
+                    (tap)="state.show = true" tooltip [(show)]="state.show" [template]="rolelist" offset="end">
+                    <i center class="material-icons" [class.active]="(state.role.active || state.role.active === 0) && state.role.active !== -1">filter_list</i>
+                    <ng-template #rolelist>
+                        <div class="role-list" *ngIf="state.role.list && state.role.list.length > 0">
+                            <div class="header">Select Role</div>
+                            <div class="role">
+                                <btn [name]="state.role.active === undefined || state.role.active === -1 ? 'wide' : 'wide inverse'" (tapped)="state.role.active = -1; state.show = false; filter()">
+                                    <div class="text">None</div>
+                                </btn>
+                            </div>
+                            <div class="role" *ngFor="let r of state.role.list; let i = index">
+                                <btn [name]="state.role.active === i ? 'wide' : 'wide inverse'" (tapped)="(state.role.active === i ? state.role.active = -1 : state.role.active = i); state.show = false; filter()">
+                                    <div class="icon" *ngIf="r.icon || r.image">
+                                        <i *ngIf="r.icon" [class]="r.icon.class">{{r.icon.value}}</i>
+                                        <img *ngIf="r.image" [src]="r.image">
+                                    </div>
+                                    <div class="text">{{r.name}}</div>
+                                </btn>
+                            </div>
+                        </div>
+                    </ng-template>
+                </div>
+                <div class="close" *ngIf="state.speech" [class.active]="state.dictate" (tap)="startDictation()">
+                    <i center class="material-icons">mic</i>
+                </div>
+                <div *ngIf="state.search" class="close" (tap)="close()">
+                    <i center class="material-icons">close</i>
+                </div>
+            </div>
+        </div>
+        <div class="body">
+            <div class="list" *ngIf="!state.loading">
+                <div class="user" *ngFor="let u of filtered_users">
+                    <div class="item details">
+                        <div class="name">{{u.name}}</div>
+                        <div class="email">
+                            <a [href]="'mailto:' + u.email">{{u.email}}</a>
+                        </div>
+                    </div>
+                    <div class="item info" *ngIf="u.location">
+                        <div class="loc" *ngIf="u.location.fixed">
+                            {{u.location.name}}
+                        </div>
+                        <div class="icon">
+                            <i center [class]="material-icons">{{u.location ? (u.location.fixed ? 'room' : 'wifi') : ''}}</i>
+                        </div>
+                        <div class="details" *ngIf="u.location.display">
+                            <div class="name">{{u.location.display.building}}</div>
+                            <div class="email">
+                                {{u.location.display.level}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item opts">
+                        <btn name="red" (tapped)="find(u)">
+                            <div>Find</div>
+                        </btn>
+                        <btn (tapped)="call(u)">
+                            <div class="text" *ngIf="!u.loading">Contact</div>
+                            <div class="icon" *ngIf="u.loading">
+                                <spinner type="circle-ring" color="#fff"></spinner>
+                            </div>
+                        </btn>
+                    </div>
+                </div>
+            </div>
+            <div class="no-item center" *ngIf="(state.loading || (!filtered_users || filtered_users.length <= 0))">
+                <div class="icon">
+                    <spinner *ngIf="state.loading" type="circle-ring" color="#999"></spinner>
+                    <i *ngIf="!state.loading" class="material-icons">{{state.search && state.search.length >= state.min_search ? 'close' : 'keyboard'}}</i>
+                </div>
+                <div class="text">
+                    {{state.loading ? 'Searching...' : (state.search && state.search.length >= state.min_search ? 'No matches found' : 'Type
+                    above to search for users')}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

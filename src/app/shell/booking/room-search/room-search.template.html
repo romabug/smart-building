@@ -1,0 +1,71 @@
+<div class="container" [class.route]="state.route">
+    <div class="search">
+        <div class="filters">
+            <div class="btn">
+                <btn name="simple" format="mini-action" (tapped)="back()">
+                    <i class="material-icons">arrow_back</i>
+                </btn>
+            </div>
+            <div class="space"></div>
+            <div class="btn">
+                <btn name="simple" (tapped)="selectDate()">
+                    <div class="icon">
+                        <i class="material-icons">event</i>
+                    </div>
+                    <div class="text">{{state.display.date}}</div>
+                </btn>
+            </div>
+            <div class="btn">
+                <btn name="simple" (tapped)="selectTime()">
+                    <div class="icon">
+                        <i class="material-icons">access_time</i>
+                    </div>
+                    <div class="text">{{state.display.duration}}</div>
+                </btn>
+            </div>
+            <div class="btn">
+                <btn name="simple" format="mini-action" (tapped)="changeFilters()">
+                    <i class="material-icons">filter_list</i>
+                </btn>
+            </div>
+        </div>
+        <div class="list" *ngIf="!state.loading">
+            <div class="item" *ngFor="let item of filtered_items">
+                <div class="details">
+                    <div class="content">
+                        <div class="level">{{item.level?.name}}</div>
+                        <div class="name">
+                            <div class="text">{{item.name}}</div>
+                            <div class="info" *ngIf="item.capacity">
+                                Capacity: {{item.capacity || '0'}} {{item.capacity === 1 ? 'Person' : 'People'}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="opts">
+                        <btn name="black inverse mobile-full" (tap)="find(item)">Map</btn>
+                        <btn name="mobile-full" (tap)="select(item)">Select</btn>
+                    </div>
+                </div>
+                <div class="timeline">
+                    <timeline
+                        [now]="(state.date && state.date === 'Today')"
+                        [start]="state.start_time || 7"
+                        [end]="state.end_time || 19"
+                        [events]="(state.date && state.date === 'Today' ? item.today : item.timeline ? item.timeline[state.date] : []) || []"
+                        [booking]="state.booking ? state.booking : null"
+                        (update)="bookingChange($event);">
+                    </timeline>
+                </div>
+            </div>
+        </div>
+        <div class="no-item center" *ngIf="state.loading || (!filtered_items || filtered_items.length <= 0)">
+            <div class="icon">
+                <spinner *ngIf="state.loading" type="circle-ring" color="#999"></spinner>
+                <i *ngIf="!state.loading" class="material-icons">{{search ? 'close' : 'keyboard'}}</i>
+            </div>
+            <div class="text">
+                {{state.loading ? 'Searching...' : (search ? 'No matches found' : 'Type above to search for spaces')}}
+            </div>
+        </div>
+    </div>
+</div>

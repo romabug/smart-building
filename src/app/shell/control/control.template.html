@@ -1,0 +1,33 @@
+<div class="container" [class.route]="model.route">
+    <div class="search">
+        <div class="header" [class.banner]="model.settings && model.settings.banner && model.settings.banner.enabled"
+            [style.background-image]="model.settings && model.settings.banner && model.settings.banner.enabled && model.settings.banner.src ? 'url('+model.settings.banner.src+')' : ''">
+            <div class="overlay"></div>
+            <div class="field">
+                <div class="icon">
+                    <i center class="material-icons">search</i>
+                </div>
+                <div class="input">
+                    <input [(ngModel)]="model.search" (ngModelChange)="filter()" [placeholder]="'Search for a space...'">
+                </div>
+                <div *ngIf="model.search" class="close" (tap)="close()">
+                    <i center class="material-icons">close</i>
+                </div>
+            </div>
+        </div>
+        <div class="body">
+            <div class="list" *ngIf="!model.loading">
+                <control-item *ngFor="let item of model.filtered_items" [item]="item"></control-item>
+            </div>
+            <div class="no-items center" *ngIf="(model.loading || (!model.filtered_items || model.filtered_items.length <= 0))">
+                <div class="icon">
+                    <spinner *ngIf="model.loading" type="circle-ring" color="#999"></spinner>
+                    <i *ngIf="!model.loading" class="material-icons">{{model.search ? 'close' : 'keyboard'}}</i>
+                </div>
+                <div class="text">
+                    {{model.loading ? 'Searching...' : (model.search ? 'No matches found' : 'Type above to search for spaces')}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

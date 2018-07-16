@@ -1,0 +1,39 @@
+
+<div class="container" [class.modal]="modal" [class.route]="!modal && model.route">
+    <div class="header">
+        <div class="search" *ngIf="model.state === 'select'">
+            <div class="icon">
+                <i class="material-icons">search</i>
+            </div>
+            <div class="input">
+                <input-field name="basic" type="text" [(model)]="model.search" placeholder="Search..."></input-field>
+            </div>
+        </div>
+        <div class="text" *ngIf="model.state !== 'select'">
+            Participants
+        </div>
+        <div class="close" (tap)="closeSearch()">
+            <btn name="black" format="mini-action" (tapped)="closeSearch()">
+                <i class="material-icons">close</i>
+            </btn>
+        </div>
+    </div>
+    <div class="body">
+        <div class="page" *ngIf="model.state !== 'select'">
+            <user-search-display [(users)]="model.users"></user-search-display>
+        </div>
+        <div class="page" *ngIf="model.state === 'select'">
+            <user-search-list [modal]="modal" [(users)]="model.users" [search]="model.search"></user-search-list>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="buttons" *ngIf="model.state !== 'select'">
+            <btn [name]="modal ? 'full-width' : ''" (tap)="model.state = 'select'">Add People</btn>
+            <btn [name]="modal ? 'full-width normal' : ''" (tapped)="confirm()">Finish</btn>
+        </div>
+        <div class="buttons" *ngIf="model.state === 'select'">
+            <btn [name]="modal ? 'full-width' : ''" (tapped)="closeSearch()">Cancel</btn>
+            <btn [name]="modal ? 'full-width normal' : ''" (tapped)="confirm()">Confirm</btn>
+        </div>
+    </div>
+</div>

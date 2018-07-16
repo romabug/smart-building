@@ -1,0 +1,30 @@
+<div class="container">
+    <div class="booking" *ngIf="!model.loading">
+        <form name="meeting-edit">
+            <div class="header" [class.edit]="model.edit">
+                <div class="block"></div>
+                <div class="heading">{{model.edit ? 'Edit' : 'View'}} Meeting</div>
+                <div class="block">
+                    <btn [name]="model.edit ? 'success' : 'black inverse'" (tapped)="model.edit ? save() : edit()">
+                        <div class="icon">
+                            <i class="material-icons">{{model.edit ? 'save' : 'edit'}}</i>
+                        </div>
+                        <div class="text">{{model.edit ? 'Save' : 'Edit'}}</div>
+                    </btn>
+                </div>
+            </div>
+            <div class="body">
+                <booking-form [edit]="model.edit" [(model)]="model"></booking-form>
+            </div>
+            <div class="footer">
+                <btn type="submit">{{model.edit ? 'Cancel' : 'Close'}}</btn>
+            </div>
+        </form>
+    </div>
+    <div class="no-item" *ngIf="model.loading">
+        <div class="icon">
+            <spinner type="circle-ring" color="rgba(0,0,0, .2)"></spinner>
+        </div>
+        <div class="text">Loading booking data...</div>
+    </div>
+</div>

@@ -1,0 +1,91 @@
+@import 'shared.styles';
+
+.timeline {
+    position: relative;
+    width: 1024px;
+    max-width: 100%;
+    height: 3em;
+
+    overflow: hidden;
+    border-top: 1px solid #ccc;
+    background: $timeline-bg;
+}
+
+.block {
+    position: absolute;
+    bottom: 0;
+    height: 0;
+    width: 0;
+    pointer-events: none;
+    &:first-child,
+    &:last-child {
+        display: none;
+    }
+}
+
+.bar {
+    position: absolute;
+    bottom: 0;
+    height: .4em;
+    width: 1px;
+    transform: translateX(-50%);
+    background-color: rgba(#fff,.87);
+    &.hour {
+        height: .8em;
+    }
+}
+
+.hour-display {
+    position: absolute;
+    color: rgba(#fff,.87);
+    top: -2em;
+    width: 2em;
+    text-align: center;
+    transform: translateX(-50%);
+}
+
+.event {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    background-color: $color-quaternary;
+    transition: top 200ms, bottom 200ms, border-radius 200ms;
+    &.booking {
+        background: repeating-linear-gradient(45deg, $color-primary, $color-primary 7px, $color-secondary 6px, $color-secondary 8px);
+        border: 1px solid $color-secondary;
+    }
+    &.move {
+        top: .1em;
+        bottom: .2em;
+        box-shadow: 0 .1em .2em .1em rgba(#000, .1);
+        border-radius: .1em;
+        // z-index: 100;
+    }
+}
+
+.now {
+    position: absolute;
+    height: 0;
+    width: 0;
+    bottom: 0;
+    .line {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 1px;
+        height: 3em;
+        background-color: $color-primary;
+    }
+
+    .triangle {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        transform: translateX(-50%);
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 0 .4em .4em .4em;
+        border-color: transparent transparent $color-primary transparent;
+    }
+}

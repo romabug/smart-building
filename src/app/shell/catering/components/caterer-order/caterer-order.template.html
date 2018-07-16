@@ -1,0 +1,88 @@
+<div class="container">
+    <div class="container" [style.display]="model.custom ? 'none' : ''">
+        <accordion>
+            <accordion-step *ngFor="let cat of caterer.options; let i = index" [show]="model.show[cat.id]" (showChange)="cat.display_name === $event ? cat.name : cat.name + cat.extra"
+                [heading]="cat.display_name || cat.name">
+                <div class="list">
+                    <div class="item" *ngFor="let item of cat.items" [class.custom]="" (tap)="customItem(item)">
+                        <div class="details">
+                            <div class="name">{{item.name}}</div>
+                            <div class="description">{{item.description}}</div>
+                            <div class="price">{{(item.price / 100) | currency}}</div>
+                        </div>
+                        <div class="order" *ngIf="model.list && (!item.properties || item.properties.length <= 0)">
+                            <div class="counter">
+                                <div class="btn" [class.disabled]="!model.list[item.id] || model.list[item.id] <= 0" (tap)="add(item.id, -1)">
+                                    <i class="material-icons">remove</i>
+                                </div>
+                                <div class="count">{{model.list[item.id] || '0'}}</div>
+                                <div class="btn" [class.disabled]="model.list[item.id] >= 20" (tap)="add(item.id, 1)">
+                                    <i class="material-icons">add</i>
+                                </div>
+                            </div>
+                            <div class="button">
+                                <btn [disabled]="!model.list[item.id]" (tapped)="addItem(item, model.list[item.id])">Add</btn>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </accordion-step>
+        </accordion>
+    </div>
+    <div class="container custom" [@show] *ngIf="model.custom">
+        <div class="list">
+            <div class="item">
+                <div class="details">
+                    <div class="name">{{model.custom.name}}</div>
+                    <div class="description">{{model.custom.description}}</div>
+                    <div class="price">{{(model.custom.price / 100) | currency}}</div>
+                </div>
+                <div class="order">
+                    <div class="counter">
+                        <div class="btn" [class.disabled]="!model.list[model.custom.id] || model.list[model.custom.id] <= 0" (tap)="add(model.custom.id, -1)">
+                            <i class="material-icons">remove</i>
+                        </div>
+                        <div class="count">{{model.list[model.custom.id] || '0'}}</div>
+                        <div class="btn" [class.disabled]="model.list[model.custom.id] >= 20" (tap)="add(model.custom.id, 1)">
+                            <i class="material-icons">add</i>
+                        </div>
+                    </div>
+                    <div class="info" *ngIf="model.custom.minimum">Minimum purchase of {{model.custom.minimum}}</div>
+                </div>
+            </div>
+            <div class="property" *ngFor="let prop of model.custom.properties">
+                <div class="header">{{prop.name}}</div>
+                <div class="value" *ngFor="let value of prop.values">
+                    <div class="name">{{value.name}}
+                        <span class="cost" *ngIf="value.extra_price">+{{value.extra_price / 100 | currency}}</span>
+                    </div>
+                    <div class="input">
+                        <div class="radio" *ngIf="prop.type === 1">
+                            <radio-btn name="extra" [model]="model.property[prop.id] === value.id" (modelChange)="setValue(prop.id, value.id)"></radio-btn>
+                        </div>
+                        <div class="counter" *ngIf="prop.type === 2">
+                            <div class="btn" [class.disabled]="!model.property[prop.id][value.id] || model.property[prop.id][value.id] <= 0"
+                                (tap)="addToProperty(prop.id, value.id, -(value.step || 1), value.min, value.max)">
+                                <i class="material-icons">remove</i>
+                            </div>
+                            <div class="count">{{model.property[prop.id][value.id] || '0'}}</div>
+                            <div class="btn" [class.disabled]="model.property[prop.id][value.id] >= 20"
+                                (tap)="addToProperty(prop.id, value.id, (value.step || 1), value.min, value.max)">
+                                <i class="material-icons">add</i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="buttons">
+            <div class="btn" (tap)="model.custom = null">
+                <i class="material-icons">close</i>
+            </div>
+            <div class="btn done" [class.disabled]="!model.list[model.custom.id] || model.list[model.custom.id] <= 0"
+                (tap)="addCustomItem(model.custom, model.list[model.custom.id])">
+                <i class="material-icons">done</i>
+            </div>
+        </div>
+    </div>
+</div>

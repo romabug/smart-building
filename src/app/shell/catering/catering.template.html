@@ -1,0 +1,48 @@
+<div class="catering">
+    <div class="caterer" *ngIf="!model.caterer">
+        <select-caterer [(caterer)]="model.caterer" (catererChange)="init()"></select-caterer>
+    </div>
+    <div class="shop" *ngIf="model.caterer">
+        <div class="header">
+            <div class="back" (tap)="model.checkout ? model.checkout = false : model.caterer = null">
+                <i class="material-icons">keyboard_arrow_left</i>
+                <span class="not-mobile">{{ model.checkout ? 'Catering Options' : model.caterer.name }}</span>
+            </div>
+            <div class="delivery">
+                <!-- <div class="location">
+                    <i class="not-mobile">Deliver to:</i>
+                    <dropdown [list]="model.locations" [(model)]="model.loc_index"></dropdown>
+                </div>
+                <div class="time">
+                    <i class="not-mobile">Time:</i><span (tap)="calendar()">{{model.display.date}}</span>
+                    at <span (tap)="time()">{{model.display.time}}</span>
+                </div> -->
+            </div>
+            <div class="options">
+                <div class="icon" [class.disabled]="!model.cart || !model.cart.total" (tap)="model.checkout = model.cart && model.cart.total">
+                    <i class="material-icons">shopping_cart</i>
+                    <div class="count" *ngIf="model.cart && model.cart.total">{{model.cart.total}}</div>
+                </div>
+                <div class="icon" (tap)="model.show_hours = true" tooltip [(show)]="model.show_hours"
+                    [template]="openingHours" position="left" offset="start" [hover]="true">
+                    <i class="material-icons">info_outline</i>
+                    <ng-template #openingHours>
+                        <div class="tooltip-text popup">
+                            <div class="title">Opening hours</div>
+                            <div class="item" *ngFor="let item of model.caterer.opening_hours">
+                                <div class="day">{{item.day}}:</div>
+                                <div class="time">{{item.time}}</div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+        <div class="items" [style.display]="model.checkout ? 'none' : ''">
+            <caterer-order [caterer]="model.caterer" [(cart)]="model.cart" (checkout)="model.checkout = true"></caterer-order>
+        </div>
+        <div class="checkout" [style.display]="model.checkout ? '' : 'none'">
+            <checkout [cart]="model.cart" (order)="order($event)"></checkout>
+        </div>
+    </div>
+</div>

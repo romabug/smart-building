@@ -1,0 +1,30 @@
+<div class="container">
+    <div class="header">
+        <div class="text">Select Booking Period</div>
+        <div class="close">
+            <i class="material-icons" (tap)="fn.close()">close</i>
+        </div>
+    </div>
+    <div class="body" *ngIf="model.form">
+        <div class="field" [class.focus]="model.focus.start">
+            <div class="label">Start:</div>
+            <div class="value">
+                <input type="time" [(ngModel)]="model.form.start" (ngModelChange)="adjustEnd()" (focus)="model.focus.start = true" (blur)="model.focus.start = false;">
+            </div>
+        </div>
+        <div class="field" [class.focus]="model.focus.end">
+            <div class="label">End:</div>
+            <div class="value">
+                <input type="time" [(ngModel)]="model.form.end" (ngModelChange)="adjustDuration()" (focus)="model.focus.end = true" (blur)="model.focus.end = false;">
+            </div>
+        </div>
+        <div class="field">
+            <div class="label">Duration:</div>
+            <div class="value">{{model.display.duration}}</div>
+        </div>
+    </div>
+    <div class="options">
+        <btn name="full-width" (tapped)="event('Cancel')">Cancel</btn>
+        <btn name="full-width normal" (tapped)="event('Accept')">Ok</btn>
+    </div>
+</div>

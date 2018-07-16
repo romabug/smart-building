@@ -1,0 +1,268 @@
+@import 'shared.styles';
+
+.container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    &.route {
+        .field {
+            width: 1048px;
+            max-width: 97.5vw;
+            border: none;
+            border-radius: 1.5em;
+            margin-top: .25em;
+            box-shadow: 0 1px 3px 0 rgba(#000, .2), 0 1px 1px 0 rgba(#000, .14), 0 2px 1px -1px rgba(#000, .12);
+        }
+    }
+}
+
+.search {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 105;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    border-bottom: 1px solid rgba(#000, .12);
+}
+
+.header {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $background;
+    .overlay {
+        display: none;
+    }
+    &.banner {
+        .overlay {
+            display: initial;
+        }
+        min-height: 4em;
+        padding: 1em;
+        background-position: center;
+        background-size: cover;
+    }
+}
+
+.field {
+    width: 100%;
+    z-index: 101;
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    padding: .1em .25em;
+    caret-color: $color-primary;
+    min-height: 3em;
+    &:focus {
+         border-color: $color-ternary;
+    }
+
+    .input {
+        flex: 1;
+    }
+
+    .icon {
+        font-size: 1.5em;
+    }
+
+    input {
+        font-size: 1em;
+        background: none;
+        outline: none;
+        color: rgba(#000, .87);
+        border: none;
+        width: 100%;
+        &::placeholder {
+            color: rgba(#000, .2);
+        }
+    }
+
+    img {
+        position: absolute;
+        top: .4em;
+        left: .4em;
+        height: 1.5em;
+        width: 1.5em;
+    }
+}
+
+button {
+    font-size: .8em;
+    margin: .25em;
+}
+
+.body {
+    overflow: auto;
+    width: 100%;
+    flex: 1;
+    height: 50%;
+}
+
+.user {
+    width: 100%;
+    background-color: #fff;
+    border-bottom: 1px solid rgba(#000, .2);
+    display: flex;
+    min-height: 5em;
+    padding: .25em 1em;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+    .details {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        padding: 1.5em;
+        font-size: .8em;
+    }
+}
+
+@include respond-to(mobile) {
+    .loc {
+        display: none;
+    }
+}
+
+.details {
+    flex-grow: 1;
+    width: 40%;
+    min-width: 8em;
+    @include respond-to(mobile) {
+        font-size: .8em;
+    }
+}
+
+.name {
+    font-size: 1.2em;
+    width: 100%;
+}
+
+.email {
+    font-size: .8em;
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    a {
+        color: rgba(#000, .54);
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+.info {
+    min-width: 9em;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    .details {
+        font-size: .8em;
+    }
+    @include respond-to(mobile) {
+        font-size: .8em;
+    }
+}
+
+.icon {
+    position: relative;
+    height: 1em;
+    width: 1em;
+    margin: .25em;
+    font-size: 2em;
+}
+
+.role-list {
+    font-size: .8em;
+    padding: .5em;
+    text-align: center;
+    .header {
+        margin-bottom: .5em;
+    }
+}
+
+.role {
+    .icon {
+        height: 1em;
+        width: 1em;
+        font-size: 1.2em;
+    }
+
+    .text {
+        margin-left: .25em;
+        white-space: nowrap;
+    }
+}
+
+.filter {
+    left: .5em;
+}
+
+.close {
+    position: relative;
+    color: rgba(#000, .54);
+    height: 2em;
+    width: 2em;
+
+    &:hover {
+        color: rgba(#000, .87);
+    }
+    i {
+        font-size: 1.5em;
+    }
+    .active {
+        color: $color-primary;
+    }
+}
+
+.filter {
+    position: absolute;
+    top: .5em;
+    height: 2em;
+    width: 2em;
+    border: 1px solid #000;
+    background-color: #fff;
+    border-radius: 1em;
+
+    &:hover {
+        opacity: .8;
+    }
+
+    i {
+        font-size: 1.5em;
+    }
+}
+
+.no-items {
+    color: #999;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    font-size: .6em;
+    .icon {
+        height: 4em;
+        width: 4em;
+        margin: 1em;
+        i {
+            font-size: 4em;
+        }
+    }
+    .text {
+        font-size: 2em;
+    }
+}

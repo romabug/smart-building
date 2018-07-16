@@ -1,0 +1,18 @@
+<div class="container">
+    <div class="body">
+        <div class="icon">
+            <i center class="material-icons">{{model.icon}}</i>
+        </div>
+        <div class="details">
+            <div class="heading" [innerHTML]="model.title | safe"  *ngIf="model.title" ></div>
+            <div class="info" [innerHTML]="model.message | safe"></div>
+            <div class="link" *ngIf="model.link">
+                <a (mousedown)="fn.event('Link')" (touchstart)="fn.event('Link')">{{model.link.text}}</a>
+            </div>
+        </div>
+    </div>
+    <div class="options">
+        <btn name="full-width" (tapped)="event('Cancel')">Cancel</btn>
+        <btn name="full-width normal" (tapped)="event('Accept')">Ok</btn>
+    </div>
+</div>

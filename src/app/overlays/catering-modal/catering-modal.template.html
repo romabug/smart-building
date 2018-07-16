@@ -1,0 +1,82 @@
+<div class="catering">
+    <div class="header">
+        <div class="icon back" *ngIf="model.list" (tap)="model.list = false">
+            <i class="pwc-arrow-back"></i>
+        </div>
+        <div class="heading">{{model.list ? 'Ordering List' : 'Catering Service'}}</div>
+    </div>
+    <div class="body">
+        <div class="item-list" *ngIf="!model.list">
+            <div #tablist class="tabs">
+                <div #tab class="tab" [class.active]="!model.category" (tap)="setCategory('')">
+                    All ({{model.items && model.items.length ? model.items.length : '0' }})
+                </div>
+                <div #tab class="tab" *ngFor="let cat of model.category_list" [class.active]="cat === model.category" (tap)="setCategory(cat)">
+                    {{cat}}
+                </div>
+                <div class="bar" [style.left]="model.tab?.left + 'px'" [style.width]="model.tab?.width + 'px'">
+                </div>
+            </div>
+            <div class="list">
+                <div class="item" *ngFor="let item of filtered_items">
+                    <div class="name">{{item.name}}</div>
+                    <div class="amount">
+                        <div class="icon less" [class.active]="item.amount > 0" (tap)="updateAmount(item, -1)">
+                            <i center class="pwc-minor"></i>
+                        </div>
+                        <div class="value" [class.active]="item.amount">{{item.amount || '0'}}</div>
+                        <div class="icon more" [class.active]="item.amount < 10"
+                            (tap)="updateAmount(item, 1)">
+                            <i center class="pwc-add"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="order-list" *ngIf="model.list">
+            <div class="table-head">
+                <div class="col">Item</div>
+                <div class="col">Quantity</div>
+            </div>
+            <div class="list">
+                <div class="item" *ngFor="let item of ordered_items">
+                    <div class="name">{{item.name}}</div>
+                    <div class="amount">
+                        <div class="amount">
+                            <div class="icon less" [class.active]="item.amount > 0" (tap)="updateAmount(item, -1)">
+                                <i center class="pwc-minor"></i>
+                            </div>
+                            <div class="value" [class.active]="item.amount">{{item.amount || '0'}}</div>
+                            <div class="icon more" (tap)="updateAmount(item, 1)">
+                                <i center class="pwc-add"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="remove" (tap)="removeItem(item)">
+                        <i center class="pwc-close"></i>
+                    </div>
+                </div>
+                <div class="tally">
+                    <div class="name">Total</div>
+                    <div class="count">{{model.item_count || '0'}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="order" *ngIf="!model.list">
+            <button class="inverse" (tap)="showOrder()" [disabled]="model.item_count == 0">
+                Place order
+                <div class="counter" *ngIf="model.item_count > 0">
+                    {{model.item_count}}
+                </div>
+            </button>
+        </div>
+        <div class="confirm" *ngIf="model.list">
+            <button class="inverse" [disabled]="model.item_count <= 0" (tap)="order()">Confirm</button>
+        </div>
+        <div class="cancel" *ngIf="!model.list" (tap)="fn.event('Cancel')">
+            <span (tap)="fn.event('Cancel')">Cancel</span>
+        </div>
+    </div>
+</div>

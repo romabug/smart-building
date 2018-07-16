@@ -1,0 +1,236 @@
+@import 'shared.styles';
+
+.catering {
+    min-height: 36.25rem;
+    width: 28em;
+    overflow: hidden;
+    font-size: 1rem;
+    border-radius: 2px;
+    background-color: #fff;
+    @include respond-to(mobile) {
+        max-height: 100%;
+        overflow: hidden;
+        width: 24em;
+    }
+
+    // fix for iPhone5
+    @media (max-width: 350px) {
+        width: 20.5em;
+    }
+}
+
+.header {
+    margin: 2.75rem 1.25rem 24px;
+    display: flex;
+    align-items: center;
+    .icon {
+        font-size: 1.5rem;
+        height: 1em;
+        width: 1em;
+        margin: 0 1rem 0 0;
+        &.back {
+            font-size: 40px;
+            @include respond-to(mobile) {
+                font-size: 30px;
+            }
+        }
+    }
+}
+
+.heading {
+    font-family: $heading-font;
+    font-size: 1.25rem;
+}
+
+.tabs {
+    position: relative;
+    width: 100%;
+    padding: 0 16px;
+    display: flex;
+}
+
+.tab {
+    text-transform: capitalize;
+    color: rgba(#000, .2);
+    font-size: 0.9rem;
+    padding: 0 8px 16px;
+    transition: color 200ms;
+    cursor: pointer;
+    &.active {
+        color: $color-primary;
+    }
+}
+
+.bar {
+    position: absolute;
+    bottom: 0;
+    height: 1px;
+    min-width: 1rem;
+    background-color: $color-primary;
+    transition: left 200ms, width 200ms;
+}
+
+.item-list {
+    .list {
+        width: 100%;
+        border-top: 1px solid rgba(#000, .2);
+        border-bottom: 1px solid rgba(#000, .2);
+        height: 24.5rem;
+        overflow: auto;
+
+        @include respond-to(mobile) {
+            height: 23rem;
+        }
+    }
+}
+
+.item {
+    display: flex;
+    margin: 0 16px;
+    padding: 12px 8px;
+    border-bottom: 1px solid rgba(#000, .2);
+    &:last-child {
+        border: none;
+    }
+    .name {
+        flex: 1;
+        width: 8rem;
+        color: rgba(#000, .54);
+    }
+
+    .amount {
+        display: flex;
+        text-align: center;
+        & > div {
+            border: 1px solid rgba(#000, .2);
+            height: 1.5rem;
+            color: rgba(#000, .2);
+        }
+
+        .icon {
+            position: relative;
+            width: 1.5rem;
+            cursor: pointer;
+            // &.more,
+            &.active {
+                color: rgba(#000, .54);
+            }
+        }
+
+        .value {
+            width: 2rem;
+            border-left: none;
+            border-right: none;
+            padding-top: 0.1rem;
+        }
+
+        .value.active {
+            color: $color-primary;
+        }
+    }
+}
+
+button {
+    position: relative;
+    width: 12.5rem;
+
+    .counter {
+        position: absolute;
+        top: 0;
+        right: 0;
+        transform: translate(50%, -50%);
+        height: 1.5rem;
+        min-width: 1.5rem;
+        border: 2px solid $color-primary;
+        border-radius: 0.75rem;
+        background-color: #fff;
+        color: $color-primary;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.close {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    font-size: 1.5rem;
+    height: 1em;
+    width: 1em;
+}
+
+.footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 16px 0;
+}
+
+.order-list {
+    .list {
+        width: 100%;
+        height: 23.5rem;
+        overflow: auto;
+    }
+}
+
+.table-head {
+    margin: 0 1.25rem;
+    border-bottom: 1px solid rgba(#fff, .2);
+    display: flex;
+    font-size: 0.8rem;
+    padding: 0.5rem 1rem;
+    color: rgba(#000, .2);
+    .col {
+        flex: 1;
+    }
+
+    .col:last-child {
+        max-width: 8rem;
+    }
+}
+
+.remove {
+    position: relative;
+    width: 2rem;
+    height: 1.5rem;
+    font-size: 1.2rem;
+    margin-left: 1rem;
+    color: rgba(#000, .2);
+    cursor: pointer;
+    // &:hover {
+    //     color: $color-primary;
+    // }
+}
+
+.tally {
+    display: flex;
+    align-items: center;
+    color: $color-primary;
+    margin: 1.5rem 1.25rem;
+    .name {
+        flex: 1;
+        text-align: right;
+    }
+
+    .count {
+        width: 10rem;
+        text-align: center;
+        padding: 0 5.75rem 0 2.5rem;
+    }
+}
+
+.cancel {
+    color: rgba(#000, .2);
+    padding: 16px 0 0;
+    cursor: pointer;
+    // &:hover {
+    //     color: $color-primary;
+    // }
+    &.disabled {
+        opacity: 0;
+        pointer-events: none;
+        cursor: default;
+    }
+}

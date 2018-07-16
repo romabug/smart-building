@@ -1,0 +1,31 @@
+
+<div class="timeline">
+    <div class="events">
+        <div class="event"
+            *ngFor="let e of events"
+            [style.left]=" (100 / (block_count / blocks) * (e.start_hours - start)) + '%'"
+            [style.width]="(100 / (block_count / blocks) * e.duration / 60) + '%'">
+        </div>
+    </div>
+    <div class="event booking"
+        [class.move]="moving"
+        *ngIf="booking"
+        [style.left]=" (100 / (block_count / blocks) * (booking.start_hours - start)) + '%'"
+        [style.width]="(100 / (block_count / blocks) * booking.duration) + '%'"
+        (panstart)="startMove($event)"
+        (panmove)="move($event)"
+        (panend)="endMove($event)">
+    </div>
+    <div class="blocks">
+        <div class="block" *ngFor="let b of block_list; let i = index" [style.left]="(100 / (block_count) * (i)) + '%'">
+            <div class="bar" [class.hour]="b.is_hour"></div>
+            <div class="hour-display" *ngIf="b.is_hour&&b.h!==start&&b.h!==end">{{b.h}}</div>
+        </div>
+    </div>
+    <div class="now"
+            *ngIf="now"
+            [style.left]=" (100 / (block_count / blocks) * (now_time - start)) + '%'">
+        <div class="triangle"></div>
+        <div class="line"></div>
+    </div>
+</div>

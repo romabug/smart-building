@@ -1,0 +1,36 @@
+
+@import 'shared.styles';
+
+.container {
+    position: absolute;
+
+    bottom: 50%;
+    left: 50%;
+    max-width: 24em;
+    font-size: .9em;
+}
+
+.content {
+    background-color: #fff;
+    padding: 1em;
+    border-radius: 4px 4px 4px 0;
+    box-shadow: 0 1px 3px 0 rgba(#000,.2), 0 1px 1px 0 rgba(#000,.14), 0 2px 1px -1px rgba(#000,.12);
+    max-width: 20em;
+}
+
+.name {
+    font-size: 1.2em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.free {
+    color: $error;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    &.available {
+        color: $success;
+    }
+}

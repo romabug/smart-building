@@ -1,0 +1,168 @@
+
+@import 'shared.styles';
+
+.container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.list {
+    flex: 1;
+    width: 100%;
+    overflow: auto;
+}
+
+.item, .total {
+    display: flex;
+    align-items: center;
+    padding: 1em;
+    background-color: #fff;
+    border-bottom: 1px solid #ccc;
+    @include respond-to(mobile) {
+        padding: 1em .5em;
+    }
+    .text {
+        display: flex;
+        align-items: center;
+        flex: 1;
+        width: 5em;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .info {
+        color: rgba(#000, .54);
+        font-size: .7em;
+    }
+
+    .amount {
+        display: flex;
+        align-items: center;
+        .total-price, .price {
+            width: 5em;
+            min-width: 5em;
+            font-weight: bold;
+            text-align: right;
+        }
+        .price {
+            font-weight: 500;
+        }
+    }
+}
+
+.total {
+    .text {
+        font-weight: bold;
+    }
+}
+
+.remove {
+    height: 2em;
+    width: 2em;
+    margin-left: 1em;
+    min-width: 2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 300ms;
+    @include respond-to(mobile) {
+        margin-left: .5em;
+    }
+    .icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 1.5em;
+        width: 1.5em;
+        border-radius: .8em;
+        background-color: #999;
+        color: #fff;
+        cursor: pointer;
+        &:hover {
+            background-color: $error;
+        }
+    }
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    .btn {
+        flex: 1;
+        border: 1px solid rgba(#000,.87);
+        background-color: #fff;
+        color: rgba(#000,.87);
+        font-size: 1.2em;
+        height: 2em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-transform: uppercase;
+        cursor: pointer;
+        &:hover {
+            background-color: rgba(#000,.87);
+            color: #fff;
+        }
+        &.done {
+            border: 1px solid $color-primary;
+            background-color: #fff;
+            color: $color-primary;
+            &:hover {
+                background-color: $color-primary;
+                color: #fff;
+            }
+        }
+        &.disabled {
+            border: 1px solid #ccc;
+            background-color: #fff;
+            color: #ccc;
+            pointer-events: none;
+            cursor: default;
+            &:hover {
+                background-color: #fff;
+                color: #ccc;
+            }
+        }
+    }
+}
+
+.notes {
+    width: 100%;
+    height: 10em;
+    min-height: 10em;
+    @include respond-to(tablet) {
+        height: 5em;
+        min-height: 5em;
+    }
+    @include respond-to(mobile) {
+        height: 4em;
+        min-height: 4em;
+    }
+}
+
+textarea {
+    outline: none;
+    border: 1px solid rgba(0,0,0,.2);
+    box-shadow: none;
+    resize: none;
+    background: #fff;
+    color: rgba(0,0,0,0.87);
+    font-size: 1em;
+    padding: 1em;
+    border-radius: 0;
+    width: 100%;
+    height: 100%;
+    &:focus {
+        border-color: $color-primary;
+    }
+}

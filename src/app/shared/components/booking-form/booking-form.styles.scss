@@ -1,0 +1,207 @@
+
+@import 'shared.styles';
+
+.container {
+    width: 100%;
+    padding: 1em;
+    .error-info {
+        font-size: .6em;
+        color: $error;
+        text-align: right;
+        margin: -.25em 0 .5em;
+        &.warn {
+            color: $pending;
+        }
+    }
+
+    &.edit {
+        .field {
+            pointer-events: auto;
+        }
+
+        .display {
+            border-bottom: 1px solid rgba(#000, .2);
+            .icon {
+                display: flex;
+            }
+        }
+    }
+}
+
+.field {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: .25em 0;
+    pointer-events: none;
+    .icon {
+        height: 1em;
+        width: 1em;
+        margin: .25em;
+        margin-right: 1em;
+        font-size: 1.5em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: $color-primary;
+    }
+    .display {
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid rgba(#000, 0);
+        transition: border 300ms;
+        flex: 1;
+        width: 5em;
+        cursor: pointer;
+        .icon {
+            display: none;
+            color: $success;
+            margin: .25em;
+        }
+    }
+    &.focus {
+        .display {
+            border-color: $color-primary;
+        }
+    }
+    &.error {
+        .display {
+            border-color: $error;
+            .icon {
+                color: $error;
+            }
+        }
+    }
+    &.warn {
+        .display {
+            border-color: $pending;
+            .icon {
+                color: $pending;
+            }
+        }
+    }
+}
+
+.value {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    width: 5em;
+}
+
+.text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+    width: 5em;
+}
+
+.week {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1em .25em;
+    @include respond-to(mobile) {
+        font-size: .7em;
+    }
+    .day {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        height: 4em;
+        width: 4em;
+        margin: .5em;
+        border-radius: 100%;
+        cursor: pointer;
+        @include respond-to(mobile) {
+            margin: .25em;
+        }
+        &.past {
+            opacity: .2;
+            pointer-events: none;
+        }
+        &.active {
+            border: 4px solid rgba(#000, .2);
+            border-left-color: $color-primary;
+            border-right-color: $color-primary;
+            @include respond-to(mobile) {
+                border: 2px solid rgba(#000, .2);
+                border-left-color: $color-primary;
+                border-right-color: $color-primary;
+            }
+        }
+    }
+
+    .date {
+        font-size: 1.2em;
+    }
+
+    .name {
+        font-size: .8em;
+
+        &.weekend {
+            color: $color-primary;
+        }
+    }
+}
+
+.block {
+    width: 100%;
+    .header {
+        display: flex;
+        align-items: center;
+        color: rgba(#000, .54);
+        transition: color 300ms;
+    }
+
+    .details {
+        display: flex;
+        padding: .5em;
+        cursor: pointer;
+        &:hover {
+            color: lighten($color-primary, 5);
+        }
+    }
+
+    .bar {
+        flex: 1;
+        width: 1px;
+        height: 1px;
+        background-color: rgba(#000, .54);
+        transition: background-color 300ms;
+    }
+
+    .text {
+        width: auto;
+    }
+
+    .icon {
+        height: 1em;
+        width: 1em;
+        font-size: 1.2em;
+        margin-left: .2em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .list {
+        height: 0;
+        transition: height 300ms;
+        overflow: hidden;
+        text-align: center;
+    }
+    &.show {
+        .header {
+            color: $color-primary;
+        }
+        .bar {
+            background-color: $color-primary;
+        }
+        .list {
+            height: auto;
+        }
+    }
+}

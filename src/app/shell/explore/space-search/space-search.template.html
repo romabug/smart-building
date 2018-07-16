@@ -1,0 +1,31 @@
+<div class="container" [class.route]="state.route">
+    <div class="search" [class.show]="(search && search.length > 0 && !model) || state.focus">
+        <div class="field">
+            <div class="icon"><i center class="material-icons">search</i></div>
+            <div class="input">
+                <input [(ngModel)]="search" (ngModelChange)="filter()" (focus)="model = null; state.focus = true" (blur)="state.focus = false" [placeholder]="'Search for a space...'">
+            </div>
+            <div *ngIf="search" class="close" (tap)="close()"><i center class="material-icons">close</i></div>
+        </div>
+        <div class="list" *ngIf="!state.loading">
+            <div class="item" *ngFor="let item of filtered_items">
+                <div class="details">
+                    <div class="name">{{item.name}}</div>
+                    <div class="email">{{item.level?.name}}</div>
+                </div>
+                <div class="opts">
+                    <btn name="find" (tap)="find(item)"><div>Find</div></btn>
+                </div>
+            </div>
+        </div>
+        <div class="no-item center" *ngIf="(state.loading || (!filtered_items || filtered_items.length <= 0)) && ((search && search.length > 0 && !model) || state.focus)">
+            <div class="icon">
+                <spinner *ngIf="state.loading" type="circle-ring" color="#999"></spinner>
+                <i *ngIf="!state.loading" class="material-icons">{{search ? 'close' : 'keyboard'}}</i>
+            </div>
+            <div class="text">
+                {{state.loading ? 'Searching...' : (search ? 'No matches found' : 'Type above to search for spaces')}}
+            </div>
+        </div>
+    </div>
+</div>

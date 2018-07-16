@@ -1,0 +1,156 @@
+<div class="container" (window:tap)="model.keys ? model.keys.show = false : ''">
+    <div class="topbar">
+        <div class="search">
+            <space-search *ngIf="model.search === 'spaces'" [(model)]="model.found_item" (modelChange)="focusSpace($event)"></space-search>
+            <people-search *ngIf="model.search === 'people'" [(model)]="model.found_user" (modelChange)="focusUser($event)"></people-search>
+        </div>
+        <div class="level" *ngIf="model.level && model.level.list && model.level.list.length" [class.push]="model.search === 'spaces' || model.search === 'people'">
+            <dropdown [list]="model.level.names" [(model)]="model.level.index" (modelChange)="setLevel(model.level.list[$event])"></dropdown>
+            <div class="show-state" *ngIf="model.zones && model.zones.enabled && model.search !== 'people'">
+                <div class="text">Zones</div>
+                <div class="checkbox">
+                    <toggle name="zones" [(model)]="model.zones.show" (modelChange)="update()" type="ios"></toggle>
+                </div>
+            </div>
+            <div class="keys" *ngIf="model.keys && model.keys.list">
+                <div class="dropdown">
+                    <div class="list" [class.show]="model.keys.show">
+                        <div class="item active" (tap)="toggle('keys')">
+                            <div class="value">{{model.keys.types && model.keys.types.length === 1 ? model.keys.types[0] : '' }} Keys</div>
+                            <div class="icon">
+                                <i class="material-icons">{{model.keys.show ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}</i>
+                            </div>
+                        </div>
+                        <div class="group">
+                            <ng-container *ngFor="let type of model.keys.types">
+                                <div class="divider" *ngIf="model.keys.types.length > 1">
+                                    <div class="bar"></div>
+                                    <div class="type">{{type}}</div>
+                                    <div class="bar"></div>
+                                </div>
+                                <div class="item" *ngFor="let key of model.keys[type]">
+                                    <div class="circle" [style.background-color]="key.color" [class.icon]="key.icon || key.image">
+                                        <div class="icon" *ngIf="key.icon || key.image">
+                                            <div *ngIf="key.image" class="image" [style.background-image]="'url('+key.image+')'"></div>
+                                            <i *ngIf="key.icon" [class]="key.icon.class">{{key.icon.value}}</i>
+                                        </div>
+                                    </div>
+                                    <div class="name">{{key.name}}</div>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="map-space">
+        <div class="bindings">
+            <div class="desks" *ngIf="model.desks && model.level && model.level.active">
+                <!-- DESK BINDINGS -->
+                <i binding [(value)]="model.desks.in_use" [sys]="model.system" mod="DeskManagement" (valueChange)="updateStyles()" [bind]="model.level.active.id"></i>
+                <i binding [(value)]="model.desks.manual" [sys]="model.system" mod="DeskManagement" (valueChange)="updateStyles()" [bind]="model.level.active.id + ':manual_checkin'"></i>
+                <i binding *ngIf="model.user" [(value)]="model.desks.user" [sys]="model.system" mod="DeskManagement" (valueChange)="updateStyles()"
+                    [bind]="model.user.win_id"></i>
+                <i binding [(value)]="model.desks.list" [sys]="model.system" mod="DeskManagement" (valueChange)="updateStyles()" [bind]="model.level.active.id + ':desk_ids'"></i>
+                <i binding [(value)]="model.desks.usage" [sys]="model.system" mod="DeskManagement" [bind]="model.level.active.id + ':occupied_count'"></i>
+                <i binding [(value)]="model.desks.free" [sys]="model.system" mod="DeskManagement" [bind]="model.level.active.id + ':free_count'"></i>
+                <i binding [(value)]="model.desks.count" [sys]="model.system" mod="DeskManagement" [bind]="model.level.active.id + ':desk_count'"></i>
+                <!-- DESK EXECUTES -->
+                <i binding [value]="model.desks.checkin" [sys]="model.system" mod="DeskManagement" exec="manual_checkin" [params]="[model.desks.id]"></i>
+                <i binding [value]="model.desks.cancel" [sys]="model.system" mod="DeskManagement" exec="cancel_reservation" [params]="[]"></i>
+            </div>
+            <div class="bookings" *ngIf="model.rooms">
+                <!-- ROOM BOOKINGS BINDINGS -->
+                <ng-container *ngFor="let room of model.rooms">
+                    <i binding [(value)]="room.raw_bookings" (valueChange)="processBookings(room)" [sys]="room.id" mod="Bookings" bind="today"></i>
+                </ng-container>
+            </div>
+            <div class="zones" *ngIf="model.zones && model.level && model.level.active">
+                <i binding [(value)]="model.zone_usage" (valueChange)="updateStyles()" [sys]="model.system" mod="FloorManagement" [bind]="model.level.active.id"></i>
+            </div>
+        </div>
+        <div class="map">
+            <map [(zoom)]="model.map.zoom" [src]="model.map.src" [poi]="model.map.poi" [styles]="model.map.styles" [listeners]="model.map.listeners"
+                [reset]="model.map.reset" (event)="check($event)">
+            </map>
+        </div>
+        <div class="zoom">
+            <div class="item" (tap)="zoom(1.2)">
+                <i class="material-icons">add</i>
+            </div>
+            <div class="item" (tap)="zoom(1 / 1.2)" [class.disabled]="!model.map.zoom || model.map.zoom <= 0">
+                <i class="material-icons">remove</i>
+            </div>
+            <div class="item" (tap)="model.map.reset = !model.map.reset; model.map.zoom = 0">
+                <i class="material-icons">refresh</i>
+            </div>
+        </div>
+        <div class="not-located" *ngIf="model.found_user && (!model.found_user.location || (!model.found_user.location.map_id && !model.found_user.location.x && !model.found_user.location.y))">
+            {{model.found_user.name}} is currently not locatable
+        </div>
+    </div>
+    <div class="options" [class.push]="model.search === 'spaces' || model.search === 'people'">
+        <div class="option" [class.show]="model.show.settings" *ngIf="!model.zones.enabled">
+            <div class="content">
+                <div class="header">
+                    Map Settings
+                </div>
+                <div class="body">
+                    <div class="item">
+                        <div class="text">Desk Status</div>
+                        <div class="checkbox">
+                            <toggle name="zones" [(model)]="model.show.desks" (modelChange)="update()" type="ios"></toggle>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="text">Room Status</div>
+                        <div class="checkbox">
+                            <toggle name="zones" [(model)]="model.show.rooms" (modelChange)="update()" type="ios"></toggle>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="text">Team Tables</div>
+                        <div class="checkbox">
+                            <toggle name="zones" [(model)]="model.show.teams" (modelChange)="update()" type="ios"></toggle>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="text">Zones</div>
+                        <div class="checkbox">
+                            <toggle name="zones" [(model)]="model.zones.show" (modelChange)="update()" type="ios"></toggle>
+                        </div>
+                    </div>
+                </div>
+                <div class="icon" (tap)="model.show.settings = !model.show.settings">
+                    <i class="material-icons">{{model.show.settings ? 'close' : 'settings'}}</i>
+                </div>
+            </div>
+        </div>
+        <div class="option half" [class.show]="model.show.info" *ngIf="!model.zones.enabled">
+            <div class="content">
+                <div class="header">
+                    Level Info
+                </div>
+                <div class="body">
+                    <div class="item">
+                        <div class="text"># of desks</div>
+                        <div class="value">{{model.desks.count}}</div>
+                    </div>
+                    <div class="item">
+                        <div class="text">Free desks</div>
+                        <div class="value" [class.low]="model.desks.free > 50" [class.medium]="model.desks.free > 25 && model.desks.free <= 25" [class.high]="model.desks.free <= 25">
+                            {{model.desks.free}}
+                        </div>
+                    </div>
+                </div>
+                <div class="icon" (tap)="model.show.info = !model.show.info">
+                    <i class="material-icons">{{model.show.info ? 'close' : 'info'}}</i>
+                </div>
+            </div>
+        </div>
+        <btn name="black" *ngIf="model.back" format="mini-action" (tapped)="back()">
+            <i class="material-icons">arrow_back</i>
+        </btn>
+    </div>
+</div>

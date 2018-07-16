@@ -1,0 +1,9 @@
+<div class="container">
+    <div class="body">
+        <calendar name="modal" [(date)]="model.form.date" [options]="{ limit: 6, past: false }" ></calendar>
+    </div>
+    <div class="options">
+        <btn name="full-width" (tapped)="event('Cancel')">Cancel</btn>
+        <btn name="full-width normal" (tapped)="event('Accept')">Ok</btn>
+    </div>
+</div>

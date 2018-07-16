@@ -1,0 +1,124 @@
+<div class="container">
+    <div class="standalone-banner" *ngIf="model.settings && model.settings.banner && model.settings.banner.enabled" [style.background-image]="model.settings && model.settings.banner && model.settings.banner.src ? 'url('+model.settings.banner.src+')' : ''">
+        <div class="overlay"></div>
+        <ng-container *ngIf="model.settings.banner.links">
+            <div class="link" *ngFor="let link of model.settings.banner.links; let i = index">
+                <btn [name]="link.active ? 'wide banner inverse' : 'wide banner'" (tapped)="goto(link)">{{link.name}}</btn>
+            </div>
+        </ng-container>
+    </div>
+    <div class="body">
+        <div class="content">
+            <div class="form">
+                <div class="heading">Book Space</div>
+                <form name="booking">
+                    <div class="field-group">
+                        <ng-container *ngFor="let field of model.fields">
+                            <div class="field" [class.error]="model.error[field.id] && !model.error[field.id].warn" [class.warn]="model.error[field.id] && model.error[field.id].warn"
+                                [class.focus]="model.focus[field.id]">
+                                <div class="icon" *ngIf="field.icon">
+                                    <i [class]="field.icon.class">{{field.icon.value}}</i>
+                                </div>
+                                <div class="display" (tap)="field.fn ? this[field.fn]() : ''">
+                                    <div class="label"></div>
+                                    <div class="value">
+                                        <div class="text" *ngIf="field.type === 'select'">{{model.form[field.id] ? model.display[field.id] : 'No ' + field.name + ' selected'
+                                            }}</div>
+                                        <div class="text" *ngIf="field.type === 'text'">
+                                            <input-field name="basic" [(model)]="model.form[field.id]" (modelChange)="model.error[field.id] = null; storeForm()" [placeholder]="field.name"
+                                                (focus)="model.focus[field.id] = true" (blur)="model.focus[field.id] = false">
+                                            </input-field>
+                                        </div>
+                                        <!-- <btn *ngIf="field.type === 'select'">Select</btn> -->
+                                    </div>
+                                    <div class="icon">
+                                        <i class="material-icons">{{model.error[field.id] ? (model.error[field.id].warn ? 'warning' : 'error') : (model.form.room
+                                            ? 'done' : '') }}</i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="error-info" *ngIf="model.error[field.id] && model.error[field.id].message" [class.warn]="model.error[field.id].warn">
+                                {{model.error[field.id].message}}
+                            </div>
+                        </ng-container>
+                        <div class="week" *ngIf="model.week">
+                            <div class="day" *ngFor="let day of model.week" [class.past]="day.past" [class.active]="day.active" (tap)="selectDay(day)">
+                                <div class="date">{{day.date}}</div>
+                                <div class="name" [class.weekend]="day.weekend">{{day.day}}</div>
+                            </div>
+                        </div>
+                        <div class="block" *ngIf="model.enable.recurrence" [class.show]="model.show.recurrence">
+                            <div class="header">
+                                <div class="bar"></div>
+                                <div class="details" (tap)="toggleBlock('recurrence')">
+                                    <div class="text">Recurrence</div>
+                                    <div class="icon" (tap)="toggleBlock('recurrence')">
+                                        <i class="material-icons">{{model.show.recurrence ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}</i>
+                                    </div>
+                                </div>
+                                <div class="bar"></div>
+                            </div>
+                            <div class="list">
+                                <radioset [(model)]="model.form.reccur" [list]="['None', 'Day', 'Week', 'Month']" [inline]="true"></radioset>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="submit">
+                        <btn name="wide" type="submit" (tapped)="!model.booking ? book() : ''">
+                            <div class="text" *ngIf="!model.booking">Book</div>
+                            <div class="icon" *ngIf="model.booking">
+                                <spinner type="circle-ring" color="#fff"></spinner>
+                            </div>
+                        </btn>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="booking-overlay">
+            <room-search *ngIf="model.page === 'room'" [(model)]="model.form.room" [filters]="model.form" (filtersChange)="updateFilters($event)"
+                (modelChange)="close()"></room-search>
+            <user-search *ngIf="model.page === 'attendees'" [(users)]="model.form.attendees" (close)="close()"></user-search>
+            <div class="overlay paint" *ngIf="model.processing">
+                <div class="no-item center">
+                    <div class="icon">
+                        <spinner type="circle-ring" color="rgba(0,0,0, .2)"></spinner>
+                    </div>
+                    <div class="text">Processing booking request...</div>
+                </div>
+            </div>
+            <div class="booking-overlay paint" *ngIf="model.page === 'results'">
+                <div class="results">
+                    <div class="icon">
+                        <i class="material-icons">done</i>
+                    </div>
+                    <div class="heading">Booking Successful</div>
+                    <div class="field-list">
+                        <div class="field">
+                            <div class="label">Booked by</div>
+                            <div class="value">{{model.display.organiser || 'You'}}</div>
+                        </div>
+                        <div class="field">
+                            <div class="label">Room</div>
+                            <div class="value">{{model.display.room}}</div>
+                        </div>
+                        <div class="field">
+                            <div class="label">Date</div>
+                            <div class="value">{{model.display.date}}</div>
+                        </div>
+                        <div class="field">
+                            <div class="label">Period</div>
+                            <div class="value">{{model.display.duration}}</div>
+                        </div>
+                        <div class="field">
+                            <div class="label">Attendees</div>
+                            <div class="value">{{model.display.attendees}}</div>
+                        </div>
+                    </div>
+                    <div class="back">
+                        <btn (tapped)="back()">Back</btn>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

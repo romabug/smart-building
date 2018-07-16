@@ -1,0 +1,11 @@
+<div class="container">
+    <div class="header">
+        <div class="text">Manage Attendees</div>
+        <div class="close">
+            <i class="material-icons" (tap)="fn.close()">close</i>
+        </div>
+    </div>
+    <div class="body" *ngIf="model.form">
+        <user-search [modal]="true" [(users)]="model.form.attendees" (close)="fn.event('Change')"></user-search>
+    </div>
+</div>

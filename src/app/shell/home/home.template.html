@@ -1,0 +1,25 @@
+<div class="container" [style.background-image]="model.background ? 'url(' + model.background + ')' : ''">
+    <div class="grid" *ngIf="model.tiles; let i = index">
+        <div class="tile" *ngFor="let tile of model.tiles" [class.span]="model.tiles.length % 2 === 1 && i === model.tiles.length - 1"
+            [style.height]="(100 / ((model.tiles.length + model.tiles.length % 2) / 2)) + '%'" (tap)="goto(tile)">
+            <div class="content" [style.background-color]="tile.color">
+                <div class="icon">
+                    <i *ngIf="tile.icon" [class]="tile.icon.class">{{tile.icon.value}}</i>
+                    <img *ngIf="tile.img" [src]="tile.img">
+                </div>
+                <div class="text" *ngIf="!tile.hide_name">{{tile.name}}</div>
+            </div>
+        </div>
+    </div>
+    <div class="disclaimer" *ngIf="model.disclaimer">{{model.disclaimer}}</div>
+    <div class="banner" *ngIf="model.banner">{{model.banner}}</div>
+    <div class="overlay" *ngIf="model.selected_tile">
+        <div class="content" [style.background-color]="model.selected_tile.color" [style.color]="model.selected_tile.color ? '#fff' : ''">
+            <div class="icon">
+                <i *ngIf="model.selected_tile.icon" [class]="model.selected_tile.icon.class">{{model.selected_tile.icon.value}}</i>
+                <img *ngIf="model.selected_tile.img" [src]="model.selected_tile.img">
+            </div>
+            <!-- <div class="text">{{model.selected_tile.name}}</div> -->
+        </div>
+    </div>
+</div>

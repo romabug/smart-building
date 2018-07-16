@@ -1,0 +1,26 @@
+<div [class]="'container ' + model.type">
+    <div class="disclaimer" *ngIf="model.disclaimer">{{model.disclaimer}}</div>
+    <div class="grid" *ngIf="model.tiles; let i = index">
+        <div class="tile" *ngFor="let tile of model.tiles" [class.multi]="model.tiles.length > 4"
+            [class.span]="model.tiles.length % 2 === 1 && i === model.tiles.length - 1"
+            [style.height]="(100 / (((model.tiles.length + (model.tiles.length > 4 ? model.tiles.length % 2 : 0)) / (model.tiles.length > 4 ? 2 : 1)))) + '%'"
+            (tap)="goto(tile)">
+            <div class="content" [style.background-color]="tile.color" [style.background-image]="tile.src ? 'url('+tile.src+')' : ''">
+                <div class="overlay" *ngIf="tile.src"></div>
+                <div class="text" *ngIf="!tile.hide_name">{{tile.name}}</div>
+                <div class="description" *ngIf="!tile.hide_name && tile.description">{{tile.description}}</div>
+                <div class="btn" *ngIf="!tile.hide_name && tile.description">
+                    <btn name="help">
+                        <div class="text">{{tile.description}}</div>
+                        <div class="icon">
+                            <i class="material-icons">keyboard_arrow_right</i>
+                        </div>
+                    </btn>
+                </div>
+            </div>
+            <div class="icon">
+                <i class="material-icons">keyboard_arrow_right</i>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,46 @@
+<div class="container">
+    <div class="header">
+        <div class="text">New Booking</div>
+        <div class="close">
+            <i class="material-icons" (tap)="fn.close()">close</i>
+        </div>
+    </div>
+    <div class="body" *ngIf="model.form">
+        <div class="field-group">
+            <ng-container *ngFor="let field of model.fields">
+                <div class="field" [class.error]="model.error[field.id]" [class.focus]="model.focus[field.id]">
+                    <div class="icon">
+                        <i class="material-icons">{{field.icon}}</i>
+                    </div>
+                    <div class="display" (tap)="field.fn ? this[field.fn]() : ''">
+                        <div class="label">{{field.name}}</div>
+                        <div class="value">
+                            <div class="text" *ngIf="field.type === 'select'">{{model.form[field.id] ? model.display[field.id] : 'No ' + field.name + ' selected' }}</div>
+                            <div class="text" *ngIf="field.type === 'text'">
+                                <input-field name="basic" [(model)]="model.form[field.id]" (modelChange)="model.error[field.id] = null; storeForm()" [placeholder]="field.name"
+                                    (focus)="model.focus[field.id] = true" (blur)="model.focus[field.id] = false">
+                                </input-field>
+                            </div>
+                            <!-- <btn *ngIf="field.type === 'select'">Select</btn> -->
+                        </div>
+                        <div class="icon">
+                            <i class="material-icons">{{model.error[field.id] ? 'error' : (model.form.room ? 'done' : '') }}</i>
+                        </div>
+                    </div>
+                </div>
+                <div class="error-info" *ngIf="model.error[field.id] && model.error[field.id].message">
+                    {{model.error[field.id].message}}
+                </div>
+            </ng-container>
+        </div>
+    </div>
+    <div class="options">
+        <btn name="full-width" (tapped)="cancel()">Cancel</btn>
+        <btn name="full-width normal" type="submit" (tapped)="!model.booking ? book() : ''">
+            <div class="text" *ngIf="!model.booking">Book</div>
+            <div class="icon" *ngIf="model.booking">
+                <spinner type="circle-ring" color="#fff"></spinner>
+            </div>
+        </btn>
+    </div>
+</div>

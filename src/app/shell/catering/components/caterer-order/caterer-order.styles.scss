@@ -1,0 +1,181 @@
+
+@import 'shared.styles';
+
+.container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: auto;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    .custom {
+        background-color: #fff;
+    }
+    & > .list {
+        flex: 1;
+        height: 5em;
+        overflow: auto;
+    }
+}
+
+.list {
+    width: 100%;
+}
+
+accordion {
+    width: 100%;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(0,0,0,.2);
+    padding: .5em .25em;
+    .details {
+        flex: 1;
+        width: 8em;
+        padding: .25em .5em;
+    }
+}
+
+.name {
+    font-size: .8em;
+    font-weight: 600;
+    color: rgba(0,0,0,.7);
+    margin-bottom: .1em;
+}
+
+.description {
+    font-size: .7em;
+    margin-bottom: .4em;
+}
+
+.price {
+    font-size: .7em;
+    color: #e96e20;
+}
+
+.counter {
+    height: 1.5em;
+    width: 6em;
+    display: flex;
+    align-items: center;
+    border-radius: .8em;
+    margin: auto;
+    border: 1px solid #ccc;
+    .btn {
+        width: 1.5em;
+        min-width: 1.5em;
+        height: 1.5em;
+        min-height: 1.5em;
+        border-radius: .8em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: $success-alt;
+        cursor: pointer;
+        color: #fff;
+        &.disabled {
+            background-color: #ccc;
+            cursor: default;
+            pointer-events: none;
+        }
+    }
+    .count {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 1;
+        padding: 0 .5em;
+    }
+}
+
+.order {
+    text-align: center;
+    .info {
+        color: $color-primary;
+        font-size: .6em;
+        text-align: center;
+        padding: .5em;
+    }
+}
+
+.button {
+    font-size: .9em;
+}
+
+.cost {
+    color: $color-primary;
+    padding: 0 .5em;
+}
+
+.property {
+    .header {
+        padding: .5em;
+        background-color: rgba(0,0,0,.05);
+        font-size: .9em;
+        text-transform: uppercase;
+    }
+    .counter {
+        font-size: .8em;
+    }
+}
+
+.value {
+    display: flex;
+    align-items: center;
+    padding: .15em 1em;
+    height: 2em;
+
+    .name {
+        flex: 1;
+        width: 5em;
+    }
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    .btn {
+        flex: 1;
+        height: 100%;
+        border: 1px solid rgba(#000,.87);
+        background-color: #fff;
+        color: rgba(#000,.87);
+        font-size: 2em;
+        height: 1.5em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        &:hover {
+            background-color: rgba(#000,.87);
+            color: #fff;
+        }
+        &.done {
+            border: 1px solid $color-primary;
+            background-color: #fff;
+            color: $color-primary;
+            &:hover {
+                background-color: $color-primary;
+                color: #fff;
+            }
+        }
+        &.disabled {
+            border: 1px solid #ccc;
+            background-color: #fff;
+            color: #ccc;
+            pointer-events: none;
+            cursor: default;
+            &:hover {
+                background-color: #fff;
+                color: #ccc;
+            }
+        }
+    }
+}

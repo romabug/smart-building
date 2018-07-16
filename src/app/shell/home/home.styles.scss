@@ -1,0 +1,131 @@
+@import 'shared.styles';
+
+.container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    max-height: 100%;
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    overflow: hidden;
+    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+        background-size: 1920px 1080px;
+    }
+}
+
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    flex: 1;
+    min-height: 50vh;
+}
+
+.tile {
+    position: relative;
+    flex: 1;
+    width: 49%;
+    min-width: 49%;
+    background-color: rgba(#000, .54);
+    &:hover {
+        opacity: .87;
+    }
+}
+
+.disclaimer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 2em;
+    padding: .5em 1.5em;
+    background-color: #fff;
+    text-align: center;
+    @include respond-to(mobile) {
+        min-height: 3em;
+        font-size: .7em;
+    }
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow: hidden;
+    animation: scale .3s ease-out;
+    z-index: 205;
+    font-size: 1.5em;
+    background-color: #fff;
+    .content {
+        padding: 0;
+        border: none;
+        color: $color-secondary;
+    }
+}
+
+@keyframes scale {
+    0% { top: 50%; left: 50%; right: 50%; bottom: 50%; }
+    100% { top: 0; left: 0; right: 0; bottom: 0; }
+}
+
+.banner {
+    position: absolute;
+    top: 2em;
+    right: -3em;
+    transform-origin: center;
+    background-color: #fff;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+    transform: rotate(45deg);
+    padding: .5em 1em;
+    min-width: 12em;
+    text-align: center;
+    z-index: 101;
+}
+
+.content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-size: 1.5em;
+    opacity: 1;
+    transition: opacity 200ms;
+    color: $tile-color;
+    border: 1px solid $tile-border;
+    cursor: pointer;
+    &:hover {
+        color: darken($tile-color, 5);
+    }
+
+    .icon {
+        margin: .5em;
+        i {
+            font-size: 3em;
+        }
+        img {
+            height: 3em;
+        }
+    }
+    padding-bottom: 1.5em;
+    .text {
+        position: absolute;
+        background-color: rgba(#000, .2);
+        padding: .5em;
+        text-align: center;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+}

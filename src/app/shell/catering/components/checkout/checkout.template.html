@@ -1,0 +1,33 @@
+<div class="container">
+    <div class="list" *ngIf="cart">
+        <div class="item" *ngFor="let i of cart.items">
+            <div class="text">
+                <div class="name">{{i.item.name}}</div>
+                <div class="info" *ngIf="i.extra_details">{{i.extra_details}}</div>
+            </div>
+            <div class="amount">
+                <div class="count">{{i.quantity}}x</div>
+                <div class="price">{{i.unit_price / 100 | currency}}</div>
+                <div class="total-price">{{(i.unit_price * i.quantity) / 100 | currency}}</div>
+            </div>
+            <div class="remove">
+                <div class="icon" (tap)="removeItem(i)"><i class="material-icons">remove</i></div>
+            </div>
+        </div>
+        <div class="total">
+            <div class="text">Total - {{cart.total}} Item{{cart.total > 1 ? 's' : '' }}</div>
+            <div class="amount">
+                <div class="total-price">{{cart.total_price / 100 | currency}}</div>
+            </div>
+            <div class="remove"></div>
+        </div>
+    </div>
+    <div class="notes" *ngIf="cart">
+        <textarea [(ngModel)]="cart.notes" placeholder="Add a note"></textarea>
+    </div>
+    <div class="buttons">
+        <div class="btn done" [class.disabled]="!cart || cart.total === 0" (tap)="placeOrder()">
+            Place Order Now
+        </div>
+    </div>
+</div>
